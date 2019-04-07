@@ -48,7 +48,7 @@ AddEventHandler('investing:balance', function()
 	local _source = source
 	local xPlayer = ESX.GetPlayerFromId(_source)
 	balance = xPlayer.getBank()
-	--TODO gives current balance
+	TriggerClientEvent('currentbalance', _source, balance)
 
 end)
 
