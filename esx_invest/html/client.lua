@@ -47,6 +47,6 @@ end)
 -- Result Event
 
 RegisterNetEvent('investing:result')
-AddEventHandler('bank:result', function(type, message)
+AddEventHandler('investing:result', function(type, message)
 	SendNUIMessage({type = 'result', m = message, t = type})
 end)
