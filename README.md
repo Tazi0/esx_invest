@@ -30,6 +30,10 @@ Brings a new aspect to making money.
 - [ ] Getting the job selected
 - [ ] (HTML) Making the list of jobs
 - [ ] Get the list of jobs available
+- [ ] Make blips
+- [ ] Open with command
+- [ ] Partner with new_banking
+- [ ] Add button to return to new_banking
 
 # Installation
 **Not finished YET**
