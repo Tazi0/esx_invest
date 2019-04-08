@@ -34,12 +34,21 @@
     <div class="cont-content" id="general">
       <div class="flex">
         <div class="balance box-shadow">
-          <p>Welcome<br>
-            <span class="name"><span class="username1"></span></span><br>
-            You have<br>
-            <span class="money"><span class="euro">$</span><span class="curbalance"></span></span><br>
-            to spend on investments
-          </p>
+          <!-- Here will be the list of jobs -->
+          <!-- TODO get a list of jobs and import them here -->
+          <h1>Here will be the list of jobs</h1>
+          <table>
+            <tr>
+              <th>Jobs</th>
+              <th>Invested</th>
+              <th>Market</th>
+            </tr>
+            <tr>
+              <td>Job1</td>
+              <td>$0</td>
+              <td>^10%</td>
+            </tr>
+          </table>
         </div>
         <div class="list-btn">
           <button class="btn btn-blue" id="deposit">
@@ -80,7 +89,7 @@
       <div class="flex">
         <div class="btn btn-blue banniere">
           <p>Deposit your money<br>
-          <span>We are the most secure bank of the city</span></p>
+          <span>To invest into companys</span></p>
         </div>
         <button class="btn btn-grey back">
           <i class="fas fa-bars"></i>
@@ -91,7 +100,7 @@
       </div>
       <form id="deposit_event">
         <div class="input-cont box-shadow">
-          <label>How much do you want to diposit</label>
+          <label>How much do you want to deposit</label>
           <input id="amount_deposit" type="number" placeholder="$0">
         </div>
         <button class="btn btn-green" type="submit">
@@ -168,9 +177,8 @@
       if (event.data.type === "openGeneral"){
                 $('#waiting').show();
                 $('body').addClass("active");
-      } else if(event.data.type === "balanceHUD") {
-          $('.username1').html(event.data.player);
-          $('.curbalance').html(event.data.balance);
+      } else if(event.data.type === "balanceHUD") { // When waiting is past and its still active
+          //Here will come the code for the jobs
       } else if (event.data.type === "closeAll"){
                 $('#waiting, #general, #withdrawUI, #depositUI, #topbar').hide();
                 $('body').removeClass("active");
