@@ -21,15 +21,15 @@ end)
 
 -- Invest(deposit) callback
 
-RegisterNUICallback('deposit', function(data)
-	TriggerServerEvent('investing:deposit', tonumber(data.amount))
+RegisterNUICallback('deposit_event', function(data)
+	TriggerServerEvent('investing:deposit', tonumber(data.amount_deposit))
 	TriggerServerEvent('investing:balance')
 end)
 
 -- Withdraw event
 
-RegisterNUICallback('withdraw', function(data)
-	TriggerServerEvent('investing:withdraw', tonumber(data.amountw))
+RegisterNUICallback('withdraw_event', function(data)
+	TriggerServerEvent('investing:withdraw', tonumber(data.amount_withdraw))
 	TriggerServerEvent('investing:balance')
 end)
 
@@ -46,7 +46,7 @@ end)
 
 -- Result Event
 
-RegisterNetEvent('bank:result')
+RegisterNetEvent('investing:result')
 AddEventHandler('bank:result', function(type, message)
 	SendNUIMessage({type = 'result', m = message, t = type})
 end)

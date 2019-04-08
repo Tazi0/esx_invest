@@ -38,14 +38,14 @@ AddEventHandler('investing:deposit', function(amount)
         ['@job'] = --TODO get selected JOB where to invested in
       })
     } else {
-      -- if you have more then 0 dollar invested into that job
-      remainder = result[1].amount+amount
-      MySQL.Async.execute("INSERT INTO invest (identifier, amount) VALUES (@identifier,@amount) WHERE job = @job",
-      {
-        ['@identifier'] = identifier,
-        ['@amount'] = remainder,
-        ['@job'] = --TODO get selected JOB where to invested in
-      })
+        -- if you have more then 0 dollar invested into that job
+        remainder = result[1].amount+amount
+        MySQL.Async.execute("INSERT INTO invest (identifier, amount) VALUES (@identifier,@amount) WHERE job = @job",
+        {
+          ['@identifier'] = identifier,
+          ['@amount'] = remainder,
+          ['@job'] = --TODO get selected JOB where to invested in
+        })
     }
 	end
 end)
