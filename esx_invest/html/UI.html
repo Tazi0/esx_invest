@@ -33,9 +33,10 @@
 
     <div class="cont-content" id="general">
       <div class="flex">
-        <div class="balance box-shadow">
+        <div class="balance box-shadow" id="joblist">
           <!-- Here will be the list of jobs -->
           <!-- TODO get a list of jobs and import them here -->
+
           <h1>Here will be the list of jobs</h1>
           <table>
             <tr>
@@ -44,9 +45,11 @@
               <th>Market</th>
             </tr>
             <tr>
-              <td>Job1</td>
-              <td>$0</td>
-              <td>^10%</td>
+              <script type="text/javascript">
+                  joblist.foreach(function (e) {
+
+                  })
+              </script>
             </tr>
           </table>
         </div>
@@ -182,8 +185,7 @@
       } else if (event.data.type === "closeAll"){
                 $('#waiting, #general, #withdrawUI, #depositUI, #topbar').hide();
                 $('body').removeClass("active");
-      }
-      else if (event.data.type === "result") {
+      } else if (event.data.type === "result") {
         if (event.data.t == "success")
           $("#result").attr('class', 'alert-green');
         else
@@ -192,7 +194,7 @@
       }
     });
   });
-    $('.btn-sign-out').click(function(){
+      $('.btn-sign-out').click(function(){
           $('#general, #waiting, #withdrawUI, #depositUI, #topbar').hide();
           $('body').removeClass("active");
           $.post('http://esx_invest/NUIFocusOff', JSON.stringify({}));

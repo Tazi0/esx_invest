@@ -70,9 +70,13 @@ AddEventHandler('investing:withdraw', function(amount)
 	if amount == nil or amount <= 0 or amount > base then
 		TriggerClientEvent('chatMessage', _source, "Invalid Amount")
 	else
-    -- genRand = #.## This could be a 0.50 or a 1.53
-		amount = amount*genRand(0, 1, 2);
-		player.addBank(amount)
+    if(Config.Goodstock = true) {
+      realamount = amount*genRand(1, 1, 2);
+    } else {
+      -- genRand = #.## This could be a 0.50 or a 1.53
+		  realamount = amount*genRand(0, 1, 2);
+    }
+		player.addBank(realamount)
     --removes amount from the SQL
     MySQL.Async.execute("UPDATE invest SET amount = @amount WHERE identifier = @identifier AND job = @job",
     {
@@ -82,6 +86,8 @@ AddEventHandler('investing:withdraw', function(amount)
     })
 	end
 end)
+
+-- TODO add interest rates
 
 RegisterServerEvent('investing:balance')
 AddEventHandler('investing:balance', function()
@@ -103,6 +109,7 @@ function genRand(min, max, decimalPlaces) {
 -- version checker
 local CurrentVersion = '0.1'
 local GithubResourceName = 'esx_invest'
+local Name = 'ESX Invest'
 local githubacct = "Tazi0"
 local resourceName = GetCurrentResourceName()
 local versionurl = "https://raw.githubusercontent.com/"..githubacct.."/"..GithubResourceName.."/master/VERSION"
@@ -113,7 +120,7 @@ PerformHttpRequest(versionurl, function(Error, NewestVersion, Header)
 		print('\n')
 		print('====================================================================')
 		print('')
-		print('ESX Invest ('..resourceName..')')
+		print(Name..' ('..resourceName..')')
 		print('')
 		print('Current Version: ' .. CurrentVersion)
 		print('Newest Version: ' .. NewestVersion)
