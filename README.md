@@ -15,7 +15,7 @@ Latest Server Build <br>
 [Linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/)
 
 # Why install this?
-It brings more "jobs" like Stockbroker.....
+It brings more "jobs" like Stockbroker.....<br>
 Brings a new aspect to making money.
 
 # TODO
@@ -34,6 +34,7 @@ Brings a new aspect to making money.
 - [ ] Open with command
 - [ ] Partner with new_banking
 - [ ] Add button to return to new_banking
+- [ ] Config to edit blips
 
 # Installation
 **Not finished YET**
