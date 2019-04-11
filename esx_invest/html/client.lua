@@ -46,12 +46,21 @@ end)
 RegisterNetEvent('job')
 AddEventHandler('jobs', function(job)
 
-	MySQL.Async.fetchAll('SELECT label FROM jobs' function(result)
+	MySQL.Async.fetchAll('SELECT * FROM jobs' function(result)
+    Counts = 0
+		for k, v in pairs(data) do
+      if(v.name == 'unemployed' or Config.Removestanderdjob == true) {
+        jobs['unemployed'] = nil
+      }
+			Counts = k
+			jobs[] = {name = v.name, label = v.label, whitelisted = v.whitelist}
+		end
 	end)
 
 	SendNUIMessage({
 		type = "joblist",
-		result = result
+		result = jobs,
+    total = Counts
 		})
 end)
 

@@ -33,24 +33,46 @@
 
     <div class="cont-content" id="general">
       <div class="flex">
-        <div class="balance box-shadow" id="joblist">
+        <div class="balance box-shadow">
           <!-- Here will be the list of jobs -->
           <!-- TODO get a list of jobs and import them here -->
 
-          <h1>Here will be the list of jobs</h1>
-          <table>
-            <tr>
-              <th>Jobs</th>
-              <th>Invested</th>
-              <th>Market</th>
-            </tr>
-            <tr>
-              <script type="text/javascript">
-                  joblist.foreach(function (e) {
-
-                  })
-              </script>
-            </tr>
+          <!-- <h1>The total list of jobs is <span class="total"></span></h1> This is kinda useless. -->
+          <div id="main">
+            <div id="jobs">
+              <div id="list">
+              </div>
+              <div id="selected">
+                <div id="notexist">
+                  <h1>Select a job</h1>
+                </div>
+                <div id="exist">
+                  <h1>This shouldn't happen...</h1>
+                  <div id="rate">
+                    <!--TODO work out how to implement rates... based on   -->
+                  </div>
+                  <div id="action">
+                    <h2>Actions</h2>
+                    <div class="group_invest">
+                      <input id="amount" type="text" placeholder="Invest the amount"></input>
+                      <button class="btn btn-violet" type="button" id="amount_deposit">
+                        <i class="far fa-money-bill-alt"></i>
+                        <p>Investing</p>
+                      </button>
+                    </div>
+                    <div class="group_invest">
+                      <input id="amountw" type="text" placeholder="Withdraw the amount"></input>
+                      <button class="btn btn-blue" type="button" id="withdraw">
+                        <i class="far fa-credit-card"></i>
+                        <p>Withdraw</p>
+                      </button>
+                    </div>
+                    <!--TODO Setting everything right here! -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
           </table>
         </div>
         <div class="list-btn">
@@ -180,10 +202,27 @@
       if (event.data.type === "openGeneral"){
                 $('#waiting').show();
                 $('body').addClass("active");
-      } else if(event.data.type === "balanceHUD") { // When waiting is past and its still active
-          //Here will come the code for the jobs
+                $('#exist').css('display', 'none')
+                $('input').val("")
+
+                $('#list').empty()
+                for(let i in joblist) {
+                  $('#list').append('<div class="jobs" id="job'+ job.name +'">' + job.name + '</div>')
+                }
+                $('.jobs').click(function() {
+                  let jobname = $(this).attr('job.name').replace('job', '')
+
+                  $('#exist').find('h1').text(selected + ", " + $(this).text())
+                })
+
+      } else if (event.data.type === "balanceHUD") { // When waiting is past and its still active
+        $('.username1').html(event.data.player);
+        $('.curbalance').html(event.data.balance);
+      } else if (event.data.type === "joblist") {
+        $('.joblist').html(event.data.result)
+        $('.total').html(event.data.total)
       } else if (event.data.type === "closeAll"){
-                $('#waiting, #general, #withdrawUI, #depositUI, #topbar').hide();
+                $('#waiting, #general, #select_job, #depositUI, #topbar').hide();
                 $('body').removeClass("active");
       } else if (event.data.type === "result") {
         if (event.data.t == "success")
@@ -203,14 +242,14 @@
           $('#depositUI, #withdrawUI').hide();
           $('#general').show();
       })
-      $('#deposit').click(function(){
-          $('#general').hide();
-          $('#depositUI').show();
+      $('#select_job').click(() =>{
+          $('#general').hide()
+          $('#jobs').css('display', 'block')
+          $("#select_job").blur()
       })
-      $('#withdraw').click(function(){
-          $('#general').hide();
-          $('#withdrawUI').show();
-      })
+      // $('#withdraw').click(function(){
+      //     $('#general').hide();
+      // })
       $('#fingerprint-content').click(function(){
           $('.fingerprint-active, .fingerprint-bar').addClass("active")
           setTimeout(function(){
