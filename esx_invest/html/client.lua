@@ -1,8 +1,11 @@
+-- Local
+
 local wall_street = {
   {name="Stock Exchange", id=374, x=150.266, y=-1040.203, z=29.374},
 }
 
 -- Basic ESX function
+
 Citizen.CreateThread(function()
 	while ESX == nil do
 		TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -28,7 +31,9 @@ Citizen.CreateThread(function()
 	end
 end)
 
+-- Currentbalance
 -- Sends there current balance
+
 RegisterNetEvent('currentbalance')
 AddEventHandler('currentbalance', function(balance)
 	local id = PlayerId()
@@ -41,7 +46,9 @@ AddEventHandler('currentbalance', function(balance)
 		})
 end)
 
--- TODO get joblist and sends it
+-- Job list
+-- Send all jobs besides removed standerd
+-- TODO remove unemployed
 
 RegisterNetEvent('job')
 AddEventHandler('jobs', function(job)
@@ -65,6 +72,7 @@ AddEventHandler('jobs', function(job)
 end)
 
 -- Invest(deposit) callback
+-- Removes money from bank account
 
 RegisterNUICallback('deposit_event', function(data)
 	TriggerServerEvent('investing:deposit', tonumber(data.amount_deposit))
@@ -72,6 +80,7 @@ RegisterNUICallback('deposit_event', function(data)
 end)
 
 -- Withdraw event
+-- Adds money from bank account
 
 RegisterNUICallback('withdraw_event', function(data)
 	TriggerServerEvent('investing:withdraw', tonumber(data.amount_withdraw))
@@ -79,6 +88,7 @@ RegisterNUICallback('withdraw_event', function(data)
 end)
 
 -- Balance callback/event
+-- Gives balance
 
 RegisterNUICallback('balance', function()
 	TriggerServerEvent('investing:balance')
@@ -89,9 +99,22 @@ AddEventHandler('balance:back', function(balance)
 	SendNUIMessage({type = 'balanceReturn', bal = balance})
 end)
 
+-- NUIFocusOff
+-- Closes everything
+
+RegisterNUICallback('NUIFocusOff', function()
+	inMenu = false
+	SetNuiFocus(false, false)
+	SendNUIMessage({type = 'closeAll'})
+end)
+
 -- Result Event
 
 RegisterNetEvent('investing:result')
 AddEventHandler('investing:result', function(type, message)
-	SendNUIMessage({type = 'result', m = message, t = type})
+	SendNUIMessage({
+    type = 'result',
+    m = message,
+    t = type
+  })
 end)

@@ -54,15 +54,15 @@
                   <div id="action">
                     <h2>Actions</h2>
                     <div class="group_invest">
-                      <input id="amount" type="text" placeholder="Invest the amount"></input>
-                      <button class="btn btn-violet" type="button" id="amount_deposit">
+                      <input id="amount" type="number" placeholder="$0"></input>
+                      <button class="btn btn-violet" type="submit" id="deposit">
                         <i class="far fa-money-bill-alt"></i>
                         <p>Investing</p>
                       </button>
                     </div>
                     <div class="group_invest">
-                      <input id="amountw" type="text" placeholder="Withdraw the amount"></input>
-                      <button class="btn btn-blue" type="button" id="withdraw">
+                      <input id="amountw" type="number" placeholder="$0"></input>
+                      <button class="btn btn-blue" type="submit" id="withdraw">
                         <i class="far fa-credit-card"></i>
                         <p>Withdraw</p>
                       </button>
@@ -261,30 +261,30 @@
       })
 
   // Deposit event
-  $("#deposit_event").submit(function(e) {
+  $("#deposit").submit(function(e) {
     e.preventDefault(); // Prevent form from submitting
     $.post('http://esx_invest/deposit_event', JSON.stringify({
         amount: $("#amount_deposit").val()
     }));
-    $('#depositUI').hide();
+    $('#exist').hide();
     $('#general').show();
     $("#amount_deposit").val('');
   });
 
   // Withdraw event
-  $("#withdraw_event").submit(function(e) {
+  $("#withdraw").submit(function(e) {
     e.preventDefault(); // Prevent form from submitting
     $.post('http://esx_invest/withdraw_event', JSON.stringify({
         amountw: $("#amount_withdraw").val()
     }));
-    $('#withdrawUI').hide(); // Hides Withdraw
+    $('#exist').hide(); // Hides jobs
     $('#general').show(); // Shows General
     $("#amount_withdraw").val(''); //sets value to 0
   });
 
   document.onkeyup = function(data){
         if (data.which == 27){
-            $('#general, #waiting, #withdrawUI, #depositUI, #topbar').hide();
+            $('#general, #waiting, #exist, #notexist, #topbar').hide();
             $('body').removeClass("active");
             $.post('http://esx_invest/NUIFocusOff', JSON.stringify({}));
         }
