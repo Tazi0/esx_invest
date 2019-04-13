@@ -41,11 +41,9 @@
           <div id="main">
             <div id="jobs">
               <div id="list">
+                <!-- This is where the list of jobs will be -->
               </div>
               <div id="selected">
-                <div id="notexist">
-                  <h1>Select a job</h1>
-                </div>
                 <div id="exist">
                   <h1>This shouldn't happen...</h1>
                   <div id="rate">
@@ -202,16 +200,29 @@
       if (event.data.type === "openGeneral"){
                 $('#waiting').show();
                 $('body').addClass("active");
-                $('#exist').css('display', 'none')
-                $('input').val("")
+                $('#exist').css('display', 'none');
+                $('input').val("");
 
+                // Makes the list empty if there is anything in it
                 $('#list').empty()
-                for(let i in joblist) {
-                  $('#list').append('<div class="jobs" id="job'+ job.name +'">' + job.name + '</div>')
-                }
-                $('.jobs').click(function() {
-                  let jobname = $(this).attr('job.name').replace('job', '')
 
+                // Set the results(joblist) inside of the div list.
+                for(let i in event.data.result) {
+                  let job = event.data.result[i];
+                  $('#list').append('<div class="jobs" id="'+ job.name +'">' + job.name + '</div>')
+                }
+
+
+                // If a job is clicked:
+                $('.jobs').click(function() {
+                  $('#list').hide();
+                  $('#selected').css('display', 'block')
+                  $("#select_job").blur()
+
+                  let id = $(this).attr('id').replace('player_', '');
+						      selected = parseInt(id);
+
+                  let jobname = $(this).attr('job.name').replace('job', '')
                   $('#exist').find('h1').text(selected + ", " + $(this).text())
                 })
 
@@ -242,11 +253,11 @@
           $('#depositUI, #withdrawUI').hide();
           $('#general').show();
       })
-      $('#select_job').click(() =>{
-          $('#general').hide()
-          $('#jobs').css('display', 'block')
-          $("#select_job").blur()
-      })
+      // $('#select_job').click(() =>{
+      //     $('#list').hide()
+      //     $('#selected').css('display', 'block')
+      //     $("#select_job").blur()
+      // })
       // $('#withdraw').click(function(){
       //     $('#general').hide();
       // })
