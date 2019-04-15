@@ -1,7 +1,11 @@
--- Local
+-- Variables
+ESX                 = nil
+inMenu              = true
+local showblips     = true
+local enableinvest  = true
 
 local wall_street = {
-  {name="Stock Exchange", id=374, x=150.266, y=-1040.203, z=29.374},
+  {name="Stock Exchange", id=374, x=150.266, y=-1040.203, z=29.374}
 }
 
 -- Basic ESX function
@@ -12,6 +16,33 @@ Citizen.CreateThread(function()
 		Citizen.Wait(0)
 	end
 end)
+
+-- Core Threading
+
+if enableinvest then
+	Citizen.CreateThread(function()
+	while true do
+		Wait(0)
+	if nearBLIP() then
+			DisplayHelpText("Press ~INPUT_PICKUP~ to access account ~b~")
+
+		if IsControlJustPressed(1, 38) then
+			inMenu = true
+			SetNuiFocus(true, true)
+			SendNUIMessage({type = 'openGeneral'})
+			TriggerServerEvent('investing:balance')
+			local ped = GetPlayerPed(-1)
+		end
+	end
+
+		if IsControlJustPressed(1, 322) then
+		inMenu = false
+			SetNuiFocus(false, false)
+			SendNUIMessage({type = 'close'})
+		end
+	end
+	end)
+end
 
 -- Map Blips
 
@@ -56,7 +87,7 @@ AddEventHandler('jobs', function(job)
 	MySQL.Async.fetchAll('SELECT * FROM jobs' function(result)
     Counts = 0
 		for k, v in pairs(data) do
-      if(v.name == 'unemployed' or Config.Removestanderdjob == true) {
+      if(v.name == 'unemployed' and Config.Removestanderdjob == true) {
         jobs['unemployed'] = nil
       }
 			Counts = k
@@ -127,3 +158,24 @@ AddEventHandler('investing:result', function(type, message)
     t = type
   })
 end)
+
+-- More
+
+function nearBLIP()
+	local player = GetPlayerPed(-1)
+	local playerloc = GetEntityCoords(player, 0)
+
+	for _, search in pairs(wall_street) do
+		local distance = GetDistanceBetweenCoords(search.x, search.y, search.z, playerloc['x'], playerloc['y'], playerloc['z'], true)
+
+		if distance <= 3 then
+			return true
+		end
+	end
+end
+
+function DisplayHelpText(str)
+	SetTextComponentFormat("STRING")
+	AddTextComponentString(str)
+	DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+end

@@ -1,4 +1,6 @@
+--
 -- Hello, have fun with my plugin -Tazio
+--
 Config = {}
 
 -- Means that it will almost be a +1.## to invested money
