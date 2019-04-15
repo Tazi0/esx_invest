@@ -28,11 +28,11 @@ Brings a new aspect to making money.
 - [x] Basics
 - [ ] Collaboration
 - [ ] Config
-- [ ] Getting the job selected
+- [x] Getting the job selected
 - [ ] (HTML) Making the list of jobs
 - [ ] Get the list of jobs available
-- [ ] Make blips
-- [ ] Open with command
+- [x] Make blips
+- [x] Open with command
 - [ ] Partner with new_banking
 - [ ] Add button to return to new_banking
 - [ ] Config to edit blips
