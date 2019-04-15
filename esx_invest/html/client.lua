@@ -108,6 +108,15 @@ RegisterNUICallback('NUIFocusOff', function()
 	SendNUIMessage({type = 'closeAll'})
 end)
 
+-- Register command
+
+RegisterCommand("invest", function(source, args, raw)
+  inMenu = true
+  SetNuiFocus(true, true)
+  SendNUIMessage({type = 'openGeneral'})
+  TriggerServerEvent('investing:balance')
+end)
+
 -- Result Event
 
 RegisterNetEvent('investing:result')
