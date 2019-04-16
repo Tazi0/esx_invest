@@ -20,22 +20,22 @@ It brings more "jobs" like Stockbroker.....<br>
 Brings a new aspect to making money.
 
 # TODO
-- [ ] html
-- [ ] CSS
-- [ ] server.lua
-- [ ] client.lua
+- [x] HTML
+- [x] CSS
+- [x] server.lua
+- [x] client.lua
 - [ ] Functioning
 - [x] Basics
 - [ ] Collaboration
-- [ ] Config
+- [x] Config
 - [x] Getting the job selected
-- [ ] (HTML) Making the list of jobs
-- [ ] Get the list of jobs available
+- [x] (HTML) Making the list of jobs
+- [x] Get the list of jobs available
 - [x] Make blips
 - [x] Open with command
 - [ ] Partner with new_banking
 - [ ] Add button to return to new_banking
-- [ ] Config to edit blips
+- [x] Config to edit blips
 
 # Installation
 **Not finished YET**
@@ -47,9 +47,6 @@ Brings a new aspect to making money.
 5. Start the resource.
 6. Goto ..A PLACE.. to open the menu or install [new_banking](https://forum.fivem.net/t/release-new-banking-reskin/220487) to open it in that menu.
 7. Start investing.
-
-# Config
-For changing [key bindings](https://docs.fivem.net/game-references/controls/)
 
 # Credits
 * Tazio - Main script creator

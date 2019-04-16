@@ -1,8 +1,8 @@
 -- Variables
+
 ESX                 = nil
 inMenu              = true
 local showblips     = true
-local enableinvest  = true
 
 local wall_street = {
   {name="Stock Exchange", id=374, x=150.266, y=-1040.203, z=29.374}
@@ -17,9 +17,9 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- Core Threading
+-- Opens menu
 
-if enableinvest then
+if Config.enabled then
 	Citizen.CreateThread(function()
 	while true do
 		Wait(0)
@@ -46,22 +46,23 @@ end
 
 -- Map Blips
 
-Citizen.CreateThread(function()
-	if showblips then
-	  for k,v in ipairs(wall_street)do
-  		local blip = AddBlipForCoord(v.x, v.y, v.z)
-  		SetBlipSprite(blip, v.id)
-  		SetBlipDisplay(blip, 4)
-  		SetBlipScale  (blip, 0.9)
-  		SetBlipColour (blip, 2)
-  		SetBlipAsShortRange(blip, true)
-  		BeginTextCommandSetBlipName("STRING")
-  		AddTextComponentString(tostring(v.name))
-  		EndTextCommandSetBlipName(blip)
-	  end
-	end
-end)
-
+if Config.blips then
+  Citizen.CreateThread(function()
+  	if showblips then
+  	  for k,v in ipairs(wall_street)do
+    		local blip = AddBlipForCoord(v.x, v.y, v.z)
+    		SetBlipSprite(blip, v.id)
+    		SetBlipDisplay(blip, 4)
+    		SetBlipScale  (blip, 0.9)
+    		SetBlipColour (blip, 2)
+    		SetBlipAsShortRange(blip, true)
+    		BeginTextCommandSetBlipName("STRING")
+    		AddTextComponentString(tostring(v.name))
+    		EndTextCommandSetBlipName(blip)
+  	  end
+  	end
+  end)
+end
 -- Currentbalance
 -- Sends there current balance
 
