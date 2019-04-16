@@ -12,5 +12,9 @@ Config.Pair_with_new_banking = false
 -- Standerds job is 'unemployed'
 Config.Removestanderdjob = true
 
--- Add your own removed jobs. 'unemployed' WILL BE REMOVED
+-- turn off "Removestanderdjob" and add your own removed jobs. 'unemployed' WILL STILL REMOVED
 Config.Removejob = ''
+
+-- Key bindings
+Config.Open = 38
+Config.Close = 322

@@ -26,7 +26,7 @@ if enableinvest then
 	if nearBLIP() then
 			DisplayHelpText("Press ~INPUT_PICKUP~ to access account ~b~")
 
-		if IsControlJustPressed(1, 38) then
+		if IsControlJustPressed(1, Config.Open) then
 			inMenu = true
 			SetNuiFocus(true, true)
 			SendNUIMessage({type = 'openGeneral'})
@@ -35,7 +35,7 @@ if enableinvest then
 		end
 	end
 
-		if IsControlJustPressed(1, 322) then
+		if IsControlJustPressed(1, Config.Close) then
 		inMenu = false
 			SetNuiFocus(false, false)
 			SendNUIMessage({type = 'close'})

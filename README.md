@@ -1,5 +1,5 @@
 # esx_invest
-**ITS NOT DONE!**
+**ITS NOT DONE!** <br>
 A FiveM plugin <br>
 Based off of [new_banking](https://forum.fivem.net/t/release-new-banking-reskin/220487) it is not a [dependency](#dependencies) but it is useful.
 
@@ -47,6 +47,9 @@ Brings a new aspect to making money.
 5. Start the resource.
 6. Goto ..A PLACE.. to open the menu or install [new_banking](https://forum.fivem.net/t/release-new-banking-reskin/220487) to open it in that menu.
 7. Start investing.
+
+# Config
+For changing [key bindings](https://docs.fivem.net/game-references/controls/)
 
 # Credits
 * Tazio - Main script creator
