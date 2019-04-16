@@ -29,7 +29,7 @@ AddEventHandler('investing:deposit', function(amount)
 	else
 		player.removeBank(amount)
     --adds amount into MYSQL
-    if(result[1].amount = 0){
+    if(result[1].amount == 0){
       -- if you haven't invested into this job
       MySQL.Async.execute("INSERT INTO invest (identifier, amount,job) VALUES (@identifier,@amount,@job)",
       {
@@ -70,7 +70,7 @@ AddEventHandler('investing:withdraw', function(amount)
 	if amount == nil or amount <= 0 or amount > base then
 		TriggerClientEvent('chatMessage', _source, "Invalid Amount")
 	else
-    if(Config.Goodstock = true) {
+    if(Config.Goodstock == true) {
       realamount = amount*genRand(1, 1, 2);
     } else {
       -- genRand = #.## This could be a 0.50 or a 1.53
