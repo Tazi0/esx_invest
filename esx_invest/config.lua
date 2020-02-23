@@ -8,7 +8,7 @@ Config.Goodstock = true
 
 -- Did you also install new_banking?
 -- This will let you click from new_banking to esx_invest
-Config.Pair_with_new_banking = false
+Config.Pair_with_new_banking = true
 
 -- Standerds job is 'unemployed'
 Config.Removestanderdjob = true
@@ -20,7 +20,7 @@ Config.Removejob = ''
 Config.enabled = true
 
 -- Show Blips
-Config.blips = true
+Config.ShowBlips = true
 
 -- Key bindings
 -- https://docs.fivem.net/game-references/controls/

@@ -194,38 +194,39 @@
     </div>
 
   <!-- Scripts -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
   <script type="text/javascript">
     $(function() {
     window.addEventListener('message', function(event) {
-      if (event.data.type === "openGeneral"){
-                $('#waiting').show();
-                $('body').addClass("active");
-                $('#exist').css('display', 'none');
-                $('input').val("");
+      if (event.data.type === "openGeneral") {
+        $('#waiting').show();
+        $('body').addClass("active");
+        $('#exist').css('display', 'none');
+        $('input').val("");
 
-                // Makes the list empty if there is anything in it
-                $('#list').empty()
+        // Makes the list empty if there is anything in it
+        $('#list').empty()
 
-                // Set the results(joblist) inside of the div list.
-                for(let i in event.data.result) {
-                  let job = event.data.result[i];
-                  $('#list').append('<div class="jobs" id="'+ job.name +'">' + job.name + '</div>')
-                }
+        // Set the results(joblist) inside of the div list.
+        for(let i in event.data.result) {
+          let job = event.data.result[i];
+          $('#list').append('<div class="jobs" id="'+ job.name +'">' + job.name + '</div>')
+        }
 
 
-                // If a job is clicked:
-                $('.jobs').click(function() {
-                  $('#list').hide();
-                  $('#selected').css('display', 'block')
-                  $("#select_job").blur()
+        // If a job is clicked:
+        $('.jobs').click(function() {
+          $('#list').hide();
+          $('#selected').css('display', 'block')
+          $("#select_job").blur()
 
-                  let id = $(this).attr('id').replace('player_', '');
-						      selected = parseInt(id);
+          let id = $(this).attr('id').replace('player_', '');
+          selected = parseInt(id);
 
-                  let jobname = $(this).attr('job.name').replace('job', '')
-                  $('#exist').find('h1').text(selected + ", " + $(this).text())
-                })
-
+          let jobname = $(this).attr('job.name').replace('job', '')
+          $('#exist').find('h1').text(selected + ", " + $(this).text())
+        })
       } else if (event.data.type === "balanceHUD") { // When waiting is past and its still active
         $('.username1').html(event.data.player);
         $('.curbalance').html(event.data.balance);

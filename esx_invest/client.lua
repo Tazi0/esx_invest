@@ -1,11 +1,9 @@
 -- Variables
-
 ESX                 = nil
 inMenu              = true
-local showblips     = true
 
 local wall_street = {
-  {name="Stock Exchange", id=374, x=150.266, y=-1040.203, z=29.374}
+  {name="Stock Exchange", id=374, x=160.266, y=-1040.203, z=29.374}
 }
 
 -- Basic ESX function
@@ -17,52 +15,50 @@ Citizen.CreateThread(function()
 	end
 end)
 
--- Opens menu
+print(ESX)
 
-if Config.enabled then
-	Citizen.CreateThread(function()
+-- Opens menu
+Citizen.CreateThread(function()
 	while true do
 		Wait(0)
-	if nearBLIP() then
-			DisplayHelpText("Press ~INPUT_PICKUP~ to access account ~b~")
+		if nearBLIP() then
+				DisplayHelpText("Press ~INPUT_PICKUP~ to access account ~b~")
 
-		if IsControlJustPressed(1, Config.Open) then
-			inMenu = true
-			SetNuiFocus(true, true)
-			SendNUIMessage({type = 'openGeneral'})
-			TriggerServerEvent('investing:balance')
-			local ped = GetPlayerPed(-1)
+			if IsControlJustPressed(1, Config.Open) then
+				inMenu = true
+				SetNuiFocus(true, true)
+				SendNUIMessage({type = 'openGeneral'})
+				TriggerServerEvent('investing:balance')
+				local ped = GetPlayerPed(-1)
+			end
 		end
-	end
 
 		if IsControlJustPressed(1, Config.Close) then
-		inMenu = false
+			inMenu = false
 			SetNuiFocus(false, false)
 			SendNUIMessage({type = 'close'})
 		end
 	end
-	end)
-end
+end)
 
 -- Map Blips
+Citizen.CreateThread(function()
+	if Config.ShowBlips then
+	  for k,v in ipairs(wall_street)do
+		local blip = AddBlipForCoord(v.x, v.y, v.z)
+		SetBlipSprite (blip, v.id)
+		SetBlipDisplay(blip, 4)
+		SetBlipScale  (blip, 0.9)
+		SetBlipColour (blip, 2)
+		SetBlipAsShortRange(blip, true)
+		BeginTextCommandSetBlipName("STRING")
+		AddTextComponentString("Stock Exchange")
+		EndTextCommandSetBlipName(blip)
+	  end
+	end
+end)
 
-if Config.blips then
-  Citizen.CreateThread(function()
-  	if showblips then
-  	  for k,v in ipairs(wall_street)do
-    		local blip = AddBlipForCoord(v.x, v.y, v.z)
-    		SetBlipSprite(blip, v.id)
-    		SetBlipDisplay(blip, 4)
-    		SetBlipScale  (blip, 0.9)
-    		SetBlipColour (blip, 2)
-    		SetBlipAsShortRange(blip, true)
-    		BeginTextCommandSetBlipName("STRING")
-    		AddTextComponentString(tostring(v.name))
-    		EndTextCommandSetBlipName(blip)
-  	  end
-  	end
-  end)
-end
+
 -- Currentbalance
 -- Sends there current balance
 
@@ -82,25 +78,25 @@ end)
 -- Send all jobs besides removed standerd
 -- TODO remove unemployed
 
-RegisterNetEvent('job')
+RegisterNetEvent('jobs')
 AddEventHandler('jobs', function(job)
 
-	MySQL.Async.fetchAll('SELECT * FROM jobs' function(result)
-    Counts = 0
-		for k, v in pairs(data) do
-      if(v.name == 'unemployed' and Config.Removestanderdjob == true) {
-        jobs['unemployed'] = nil
-      }
-			Counts = k
-			jobs[] = {name = v.name, label = v.label, whitelisted = v.whitelist}
+	local data = MySQL.Async.fetchAll('SELECT * FROM jobs')
+	local jobs = {}
+    local Counts = 0
+	for k, v in pairs(data) do
+		if v.name == 'unemployed' and Config.Removestanderdjob == true then
+			jobs['unemployed'] = nil
 		end
-	end)
+		Counts = Counts+1
+		table.insert(jobs, {name = v.name, label = v.label, whitelisted = v.whitelist})
+	end
 
 	SendNUIMessage({
 		type = "joblist",
 		result = jobs,
-    total = Counts
-		})
+		total = Counts
+	})
 end)
 
 -- Invest(deposit) callback
@@ -135,9 +131,21 @@ end)
 -- Closes everything
 
 RegisterNUICallback('NUIFocusOff', function()
-	inMenu = false
-	SetNuiFocus(false, false)
-	SendNUIMessage({type = 'closeAll'})
+	closeUI()
+end)
+
+AddEventHandler('onResourceStop', function (resourceName)
+	if (GetCurrentResourceName() ~= resourceName) then
+	  return
+	end
+	closeUI()
+end)
+
+AddEventHandler('onResourceStart', function (resourceName)
+	if(GetCurrentResourceName() ~= resourceName) then
+		return
+	end
+	closeUI()
 end)
 
 -- Register command
@@ -173,6 +181,18 @@ function nearBLIP()
 			return true
 		end
 	end
+end
+
+function closeUI()
+	inMenu = false
+	SetNuiFocus(false, false)
+	SendNUIMessage({type = 'closeAll'})
+end
+
+function openUI()
+	inMenu = true
+	SetNuiFocus(true, true)
+	SendNUIMessage({type = 'openGeneral'})
 end
 
 function DisplayHelpText(str)
