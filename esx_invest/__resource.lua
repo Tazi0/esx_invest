@@ -1,33 +1,28 @@
 resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 
-ui_page('client/UI.html')
+ui_page('client/html/UI.html')
 
-client_scripts {
-  "config.lua",
-  "@mysql-async/lib/MySQL.lua",
-  "client.lua"
-}
+client_script('client/client.lua')
 
-server_scripts {
-  "config.lua",
-  "@mysql-async/lib/MySQL.lua",
-  "server.lua",
-}
+server_scripts({
+    "server.lua",
+    '@mysql-async/lib/MySQL.lua'
+})
 
-
-files {
-  'client/UI.html',
-  'client/style.css',
-  'client/media/font/Bariol_Regular.otf',
-  'client/media/font/Vision-Black.otf',
-  'client/media/font/Vision-Bold.otf',
-  'client/media/font/Vision-Heavy.otf',
-  'client/media/img/bg.png',
-  'client/media/img/circle.png',
-  'client/media/img/curve.png',
-  'client/media/img/fingerprint.png',
-  'client/media/img/fingerprint.jpg',
-  'client/media/img/graph.png',
-  'client/media/img/logo-big.png',
-  'client/media/img/logo-top.png',
-}
+files({
+    'client/html/UI.html',
+    'client/html/script.js',
+    'client/html/style.css',
+    'client/html/media/font/Bariol_Regular.otf',
+    'client/html/media/font/Vision-Black.otf',
+    'client/html/media/font/Vision-Bold.otf',
+    'client/html/media/font/Vision-Heavy.otf',
+    'client/html/media/img/bg.png',
+    'client/html/media/img/circle.png',
+    'client/html/media/img/curve.png',
+    'client/html/media/img/fingerprint.png',
+    'client/html/media/img/fingerprint.jpg',
+    'client/html/media/img/graph.png',
+    'client/html/media/img/logo-big.png',
+    'client/html/media/img/logo-top.png',
+})
