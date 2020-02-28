@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="style.css" type="text/css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" crossorigin="anonymous">
     <style>
-        #depositUI, #withdrawUI, #transferUI, #general, #topbar, #waiting
+        #buyUI, #allUI, #sellUI, #general, #topbar/*, #waiting */
         {display: none;}
    </style>
 </head>
@@ -13,48 +13,39 @@
     <div class="container">
         <div id="result"></div>
         <div class="topbar" id="topbar">
-            <div class="cont-p-1">
-                <div class="parale-1 "></div>
-            </div>
-            <div class="cont-p-2">
-                <div class="parale-2"></div>
-            </div>
-            <div class="cont-p-3">
-                <div class="parale-3"></div>
-            </div>
             <nav>
                 <div class="logo-topbar"></div>
-                <button class="btn-sign-out">Close<i class="fas fa-sign-out-alt"></i></button>
+                <button id="close" class="btn-sign-out">Close<i class="fas fa-sign-out-alt"></i></button>
             </nav>
         </div>
 <!-- ########### GENERAL ###########  -->
         <div class="cont-content" id="general">
             <div class="flex">
-                <div class="balance box-shadow">
+                <div class="balance">
                     <p>Welcome<br>
-                        <span class="name"><span class="username"></span></span><br>
-                        Invested:<br>
-                        <span class="money"><span>$</span><span class="invested"></span></span>
+                        <span class="name"></span> <br>
+                        Invested: <br>
+                        <span class="money"></span>
                     </p>
                 </div>
                 <div class="list-btn">
-                    <button class="btn btn-blue" id="deposit">
+                    <button class="btn btn-blue" id="buy">
                         <i class="fas fa-chart-line"></i>
                         <span class="fas fa-chart-line icon"></span>
-                        <p>Deposit<br>
-                        <span>Your money is save here</span></p>
+                        <p>Buy<br>
+                        <span>buy job stocks</span></p>
                     </button>
-                    <button class="btn btn-violet" id="withdraw">
+                    <button class="btn btn-violet" id="all">
                         <i class="far fa-credit-card"></i>
                         <span class="far fa-credit-card icon"></span>
-                        <p>Withdraw<br>
-                        <span>We will give the money back you stored</span></p>
+                        <p>Investments<br>
+                        <span>show all the investments</span></p>
                     </button>
-                    <button class="btn btn-orange" id="transfer">
+                    <button class="btn btn-orange" id="sell">
                         <i class="fas fa-exchange-alt"></i>
                         <span class="fas fa-exchange-alt icon"></span>
-                        <p>Transfer<br>
-                        <span>Give your money to someone else</span></p>
+                        <p>Sell<br>
+                        <span>sell stocks</span></p>
                     </button>
                 </div>
             </div>
@@ -62,7 +53,7 @@
                 <div class="pub box-shadow confiance">
                     <p>
                         <span>You can trust us</span><br>
-                        The number of BNP Paribas account creation has increased by 7% since 2017
+                        the stock market has been going up by 7%
                     </p>
                     <div class="circle-confiance"></div>
                 </div>
@@ -71,14 +62,84 @@
                         <i class="far fa-handshake"></i>
                         <span class="far fa-handshake icon"></span>
                         <p>New Banking<br>
-                        <span>The modern day banking system</span></p>
+                        <span>the modern day banking system</span></p>
                     </button>
                 </div>
             </div>
         </div>
-<!-- ########### DEPOSIT ###########  -->
-        <div class="cont-content" id="depositUI">
-            <div class="flex">
+<!-- ########### BUY MENU ###########  -->
+        <div class="cont-content jobs" id="buyUI">
+            <table id="jobs">
+                <thead>
+                    <tr>
+                        <th>Job name</th>
+                        <th>Rate</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Job 1</th>
+                        <th><i class="fas fa-arrow-up"></i> 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th><i class="fas fa-arrow-down"></i> 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                    <tr>
+                        <th>Job 2</th>
+                        <th>^ 1.2%</th>
+                    </tr>
+                </tbody>
+            </table>
+            <form>
+                <div class="input-cont">
+                    <label>How much do you want to deposit</label>
+                    <input type="number" id="amount" placeholder="$0">
+                </div>
+                <button class="btn btn-green" type="submit">
+                    <i class="fas fa-check"></i>
+                    <span class="fas fa-check icon"></span>
+                    <p>Validate<br>
+                    <span>Your Deposit</span></p>
+                </button>
+            </form>
+            <!-- <div class="flex">
                 <div class="btn btn-blue banniere">
                     <p>Deposit your money<br>
                     <span>We are the most secure bank of the city</span></p>
@@ -89,8 +150,8 @@
                     <p>Return<br>
                     <span>To the main menu</span></p>
                 </button>
-            </div>
-            <form id="deposit1">
+            </div> -->
+            <!-- <form id="deposit1">
                 <div class="input-cont box-shadow">
                     <label>How much do you want to diposit</label>
                     <input id="amount" type="number" placeholder="$0">
@@ -101,10 +162,10 @@
                     <p>Validate<br>
                     <span>Your Deposit</span></p>
                 </button>
-            </form>
+            </form> -->
         </div>
-<!-- ########### WITHDRAW ###########  -->
-        <div class="cont-content" id="withdrawUI">
+<!-- ########### ALL MENU ###########  -->
+        <div class="cont-content" id="allUI">
             <div class="flex">
                 <div class="btn btn-violet banniere">
                     <p>Withdraw money<br>
@@ -130,8 +191,8 @@
                 </button>
             </form>
         </div>
-<!-- ########### TRANSFER ###########  -->
-        <div class="cont-content" id="transferUI">
+<!-- ########### SELL MENU ###########  -->
+        <div class="cont-content" id="sellUI">
             <div class="flex">
                 <div class="btn btn-orange banniere">
                     <p>Make a transfer<br>
@@ -166,27 +227,15 @@
 <!-- ########### WAITING ###########  -->
         <div class="cont-waiting" id="waiting">
             <div class="content-waiting">
-                <div class="mainlogo"></div>
-                <p><span>Please</span> connect<br>
-                by the help <span>of</span> your fingerprint</p>
+                <div class="box">
+                    <div class="mainlogo"></div>
+                    <p>Please <span>log in</span><br>
+                    by the help of your fingerprint</p>
+                </div>
                 <div id="fingerprint-content">
                     <div class="fingerprint-default"></div>
                     <div class="fingerprint-active"></div>
                     <div class="fingerprint-bar"></div>
-                </div>
-            </div>
-            <div class="bg-waiting">
-                <div class="cont-p-4">
-                    <div class="parale-4"></div>
-                </div>
-                <div class="cont-p-5">
-                    <div class="parale-5"></div>
-                </div>
-                <div class="cont-p-6">
-                    <div class="parale-6"></div>
-                </div>
-                <div class="cont-p-7">
-                    <div class="parale-7"></div>
                 </div>
             </div>
         </div>

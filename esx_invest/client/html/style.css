@@ -16,24 +16,27 @@ textarea:focus, input:focus{
 *:focus {
     outline: none;
 }
-@font-face {
-    font-family: vision-heavy;
-    src: url(media/font/Vision-Heavy.otf);
-}
+
 @font-face {
     font-family: bariol;
     src: url(media/font/Bariol_Regular.otf);
 }
+
+@font-face {
+    font-family: futura;
+    src: url(media/font/Futura-Bold.woff) format('woff');
+}
+
 .container{
 	height: 600px;
 	width: 900px;
-	margin:auto;
+    margin:auto;
 }
 body{
 	display: flex;
     flex-direction: column;
     justify-content: center;
-    font-family: "bariol", sans-serif;
+    font-family: "futura", sans-serif;
 }
 .box-shadow{
 	-webkit-box-shadow: 0px 0px 40px 0px rgba(224,224,224,0.5);
@@ -41,13 +44,13 @@ body{
 	box-shadow: 0px 0px 40px 0px rgba(224,224,224,0.5);
 }
 .cont-content{
-	background: #f9f9f9;
+	background: #eeeeee;
 	height: calc(100% - 179px);
 	width: calc(100% - 120px);
-	padding: 60px;
+    padding: 60px;
 }
 .cont-waiting{
-	background: #f9f9f9;
+	background: #eeeeee;
 	height: 100%;
 	width: 100%;
 	position: relative;
@@ -66,15 +69,23 @@ button{
 .btn{
 	width: 236px;
 	height: 77px;
-	font-family: "vision-heavy", sans-serif;
+	font-family: "futura", sans-serif;
 	font-size: 22px;
 	text-transform: uppercase;
-	color: white;
 	position: relative;
 	overflow: hidden;
 	text-align: left;
 	display: flex;
-	padding-left: 20px;
+    padding-left: 20px;
+    border-radius: 10px;
+    background-color: #eeeeee;
+    color: black;
+    box-shadow: -9px -9px 12px 0 rgb(255, 255, 255),
+                9px 9px 12px 0 rgba(0,0,0,.03);
+}
+.btn span,
+.btn p {
+    z-index: 1;
 }
 .btn .icon{
 	line-height: 38px;
@@ -82,7 +93,7 @@ button{
 }
 .btn span:last-child{
 	font-size: 15px;
-	font-family: "bariol", sans-serif;
+	font-family: "futura", sans-serif;
 	text-transform: none;
 }
 .btn i{
@@ -91,38 +102,23 @@ button{
     font-size: 130px;
     left: -19%;
     top: -34%;
-    opacity: 0.1;
+    /* opacity: 0.1; */
     transition-duration: 0.3s;
 }
-.btn-blue{
-	background: #3a93e5;
+.btn-blue i{
+	color: #30d6ff;
 }
-.btn-blue span:last-child{
-	color: #14416a;
+.btn-violet i{
+	color: #a555e9;
 }
-.btn-violet{
-	background: #a555e9;
+.btn-orange i{
+	color: #e5873b;
 }
-.btn-violet span:last-child{
-	color: #380f5a;
+.btn-green i{
+	color: #7cb732;
 }
-.btn-orange{
-	background: #e5873b;
-}
-.btn-orange span:last-child{
-	color: #5b2c06;
-}
-.btn-green{
-	background: #7cb732;
-}
-.btn-green span:last-child{
-	color: #3a5d0d;
-}
-.btn-grey{
-	background: #a0a0a0;
-}
-.btn-grey span:last-child{
-	color: #333435;
+.btn-grey i{
+	color: #a0a0a0;
 }
 .btn:hover i{
 	transform: rotate(0deg);
@@ -132,7 +128,8 @@ button{
 /* ###############        TOP BAR        ###############*/
 /*######################################################*/
 .topbar{
-	background: linear-gradient(to right, #c8db2b , #268f3a);
+    /* background: linear-gradient(to right, #c8db2b , #268f3a); */
+    background-color: #eeeeee;
     height: 59px;
     width: 100%;
     display: flex;
@@ -198,10 +195,10 @@ nav{
     z-index: 1;
 }
 .btn-sign-out{
-	color: white;
+	color: black;
 	background: rgba(0,0,0,0);
 	font-size: 20px;
-	font-family: "bariol", sans-serif;
+	font-family: "futura", sans-serif;
 }
 .btn-sign-out i{
 	font-size: 15px;
@@ -212,10 +209,11 @@ nav{
 	margin-left: 10px;
 }
 .logo-topbar{
-	height: 32px;
-    width: 108px;
+	height: 50px;
+    width: 205px;
     background-image: url(media/img/logo-top.png);
     background-repeat: no-repeat;
+    margin-top: 15px;
 }
 /*######################################################*/
 /* ###############       MAIN MENU       ###############*/
@@ -223,7 +221,7 @@ nav{
 .balance{
 	width: 403px;
     height: 183px;
-    background: white;
+    background: #eeeeee;
     margin-right: 60px;
     margin-bottom: 60px;
     padding: 40px;
@@ -232,18 +230,26 @@ nav{
     background-image: url(media/img/curve.png);
     background-repeat: no-repeat;
     background-position: bottom;
+    border-radius: 10px;
+    box-shadow: -9px -9px 12px 0 rgb(255, 255, 255),
+                9px 9px 12px 0 rgba(0,0,0,.03);
 }
 .balance .name{
 	font-size: 25px;
-	color: #a9cc2e;
+	color: #28903a;
 	margin-bottom: 5px;
     display: block;
 }
 .balance .money{
 	font-size: 60px;
 	color: #28903a;
-	font-family: "vision-heavy", sans-serif;
+	font-family: "futura", sans-serif;
 }
+
+.balance .money::before {
+    content: "$";
+}
+
 .balance .money .dollars{
 	color: #e1e0e0;
 }
@@ -263,7 +269,11 @@ nav{
 .confiance{
 	margin-right: 60px;
 	display: flex;
-	justify-content: space-between;
+    justify-content: space-between;
+    background-color: #eeeeee;
+    border-radius: 10px;
+    box-shadow: -9px -9px 12px 0 rgb(255, 255, 255),
+                9px 9px 12px 0 rgba(0,0,0,.03);
 }
 .confiance p{
 	width: 235px;
@@ -275,7 +285,7 @@ nav{
 	text-transform: uppercase;
 	font-size: 16px;
 	color: #181818;
-	font-family: "vision-heavy",sans-serif;
+	font-family: "futura",sans-serif;
 }
 .circle-confiance{
 	width: 75px;
@@ -283,11 +293,9 @@ nav{
 	background-image: url(media/img/circle.png);
 	margin: 11px;
 }
-.social{
-	background-image: url(media/img/logo.png);
-	background-repeat: no-repeat;
-	background-position-y: 1px;
-    background-position-x: 230px;
+
+.social {
+    background: transparent;
 }
 
 .social button {
@@ -305,7 +313,74 @@ nav{
 }
 
 /*######################################################*/
-/* ###############     WITHDRAW MENU      ###############*/
+/* #################     BUY MENU      ################ */
+/*######################################################*/
+
+.jobs form .input-cont {
+    width: 40%;
+}
+
+.jobs form .btn {
+    left: 75px;
+}
+
+table {
+    width: 50%;
+    float: left;
+    margin-right: 15px;
+    height: 100px;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #181818;
+}
+
+thead tr {
+    height: 50px;
+    color: white;
+}
+
+thead tr:first-child th:first-child {
+    border-top-left-radius: 15px;
+}
+
+thead tr:first-child th:last-child {
+    border-top-right-radius: 15px;
+}
+
+tbody {
+    height: 100px;
+    background-color: white;
+}
+
+tbody tr {
+    height: 50px;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f5f5f5;
+}
+
+.fa-arrow-up {
+    color: green;
+}
+
+.fa-arrow-down {
+    color: red;
+}
+
+tbody tr:last-child th:first-child {
+    border-bottom-left-radius: 15px;
+}
+
+tbody tr:last-child th:last-child {
+    border-bottom-right-radius: 15px;
+}
+
+/*######################################################*/
+/* ###############     WITHDRAW MENU      ############# */
 /*######################################################*/
 
 .banniere{
@@ -322,25 +397,29 @@ label{
 	margin-bottom: 10px;
 	font-size: 17px;
 	color: #414141;
-	font-family: "bariol", sans-serif;
+	font-family: "futura", sans-serif;
 }
 .input-cont{
 	width: 720px;
     height: 87px;
-    background: white;
+    background: #eeeeee;
     display: flex;
     flex-direction: column;
     padding: 30px;
     margin-bottom: 60px;
+    border-radius: 15px;
+    box-shadow: -9px -9px 12px 0 rgb(255, 255, 255),
+                9px 9px 12px 0 rgba(0,0,0,.03);
 }
 .input-cont input{
 	width: 100%;
     height: 50px;
     text-align: center;
+    background-color: #eeeeee;
     border: 0;
-    font-size: 60px;
+    font-size: 50px;
     color: #28903a;
-    font-family: "vision-heavy",sans-serif;
+    font-family: "futura",sans-serif;
 }
 .input-cont input::-webkit-input-placeholder {
   color: #7cb732;
@@ -369,11 +448,10 @@ label{
 }
 .mainlogo{
 	margin:auto;
-	width: 320px;
+	width: 100px;
     height: 95px;
 	background-image: url(media/img/logo-big.png);
 	background-repeat: no-repeat;
-	margin-top: 70px;
 }
 .content-waiting p{
 	margin-top: 70px;
@@ -383,31 +461,40 @@ label{
 	flex-direction: column;
 	justify-content: center;
 	z-index: 1;
-	width: 410px;
 	position: absolute;
 	left: 50%;
 	text-align: center;
-	margin-left: -205px;
+	margin-left: -255px;
 	font-size: 30px;
-	color: white;
+	color: rgb(104, 104, 104);
 }
 .content-waiting span{
 	color: #414141;
 }
+
+.content-waiting .box {
+	margin-top: 70px;
+    background-color: white;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: -9px -9px 12px 0 rgb(255, 255, 255),
+                9px 9px 12px 0 rgba(0,0,0,.03);
+}
+
 #fingerprint-content{
 	position: relative;
 	margin:auto;
-	margin-top: 127px;
+	margin-top: 67px;
 	width: 120px;
 	height: 120px;
 	border-radius: 50%;
-	border:4px solid #eaeaea;
+	border:4px solid #f3f3f3;
 	cursor: pointer;
 	overflow: hidden;
 	transition-duration: 0.2s;
 }
 #fingerprint-content:hover{
-	border:4px solid #7cb732;
+    border: 2px solid #7cb732;
 }
 .fingerprint-default{
 	position: absolute;
@@ -416,9 +503,14 @@ label{
     background-image: url(media/img/fingerprint.jpg);
     background-repeat: no-repeat;
     background-position: bottom;
-    opacity: 0.2;
-    transition-duration: 1.2s;
+    opacity: 0.66;
+    transition-duration: 0.6s;
 }
+
+.fingerprint-default:hover {
+    opacity: 1;
+}
+
 .fingerprint-active{
 	position: absolute;
     width: 120px;

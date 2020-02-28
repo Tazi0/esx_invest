@@ -1,13 +1,3 @@
--- Config
-Config = {}
-
-Config.ShowBlips = true
-
-Config.WallStreet = {
-    {name="Stock Exchange", id=374, x=160.266, y=-1040.203, z=29.374}
-}
-
-
 -- Show notification
 Citizen.CreateThread(function()
     while true do
@@ -57,6 +47,11 @@ end)
 -- UI callbacks
 RegisterNUICallback('close', function(data, cb) 
     closeUI()
+end)
+
+RegisterNUICallback("newBanking", function()
+	closeUI()
+	exports.new_banking:openUI()
 end)
 
 -- Open UI

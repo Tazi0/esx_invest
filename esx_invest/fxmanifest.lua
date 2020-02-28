@@ -2,9 +2,18 @@ resource_manifest_version '44febabe-d386-4d18-afbe-5e627f4af937'
 
 ui_page('client/html/UI.html')
 
-client_script('client/client.lua')
+dependencies({
+    'mysql-async',
+    'es_extended'
+})
+
+client_scripts({
+    'config.lua',
+    'client/client.lua'
+})
 
 server_scripts({
+    'config.lua',
     "server.lua",
     '@mysql-async/lib/MySQL.lua'
 })
