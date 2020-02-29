@@ -5,20 +5,21 @@ A FiveM plugin <br>
 Based off of [new_banking](https://forum.fivem.net/t/release-new-banking-reskin/220487) it is not a [dependency](#dependencies) but it is useful. (because it collaborates with it)
 
 ## Dependencies
-[FXServer](https://docs.fivem.net/server-manual/setting-up-a-server/)
-[Essentialmode](https://forum.fivem.net/t/release-essentialmode-base/3665)
-[es_extended (ESX)](https://forum.fivem.net/t/release-esx-base/39881)
-[esx_jobs](https://forum.fivem.net/t/release-esx-jobs/41949)
-(optional [new_banking](https://forum.fivem.net/t/release-new-banking-reskin/220487))
+
+ - [FXServer](https://docs.fivem.net/server-manual/setting-up-a-server/)
+ - [Essentialmode](https://forum.fivem.net/t/release-essentialmode-base/3665)
+ - [es_extended (ESX)](https://forum.fivem.net/t/release-esx-base/39881)
+ - [esx_jobs](https://forum.fivem.net/t/release-esx-jobs/41949)
+ - (optional [new_banking](https://forum.fivem.net/t/release-new-banking-reskin/220487))
 
 Works with every job (as long as it's in the database table 'jobs')
 
 Latest Server Build 
-[Windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/)
-[Linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/)
+  - [Windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/)
+  - [Linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/)
 
 ## Why install this?
-It brings more "jobs" like Stockbroker.....
+It brings more "jobs" like Stockbroker..... <br>
 Brings a new aspect to making money.
 
 ## TODO
