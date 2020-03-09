@@ -35,10 +35,11 @@ AddEventHandler("invest:all", function()
     local user = MySQL.Sync.fetchAll('SELECT * FROM `invest` WHERE `identifier`=@id', {["@id"] = xPlayer.getIdentifier()})
     for k, v in pairs(user) do
         print(k, v.identifier, v.amount, v.job, v.active, v.created)
+        user[k].label = Cache[v.job].label
     end
     TriggerClientEvent("invest:nui", _source, {
         type = "all",
-        player = user
+        cache = user
     })
 end)
 
@@ -76,6 +77,9 @@ end
 AddEventHandler('onResourceStart', function()
     function loopUpdate()
         Citizen.Wait(60000*Config.InvestRateTime)
+        if Config.Debug then
+            print("[esx_invest] Creating new investments")
+        end
         local jobs = MySQL.Sync.fetchAll("SELECT name,label,investRate FROM `jobs`")
         for k, v in pairs(jobs) do
             if Config.GoodStock then
@@ -85,7 +89,7 @@ AddEventHandler('onResourceStart', function()
             end
             -- print(newRate)
             -- print(v.name)
-            local result = MySQL.Sync.execute("UPDATE jobs SET investRate=@rate WHERE name=@name", {
+            MySQL.Sync.execute("UPDATE jobs SET investRate=@rate WHERE name=@name", {
                 ["@rate"] = newRate,
                 ["@name"] = v.name
             })
@@ -103,7 +107,7 @@ AddEventHandler('onResourceStart', function()
     for k, v in pairs(jobs) do
         Cache[v.name] = {stock = v.investRate, rate = "stale", label = v.label}
     end
-    -- loopUpdate()
+    loopUpdate()
 end)
 
 -- print(genRand(0, 2, 2)) -- from 0.00 to 2.00

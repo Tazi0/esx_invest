@@ -66,6 +66,11 @@ button{
 	cursor: pointer;
 	border: 0;
 }
+
+button[type="submit"] {
+    opacity: 0.6;
+    pointer-events: none;
+}
 .btn{
 	width: 236px;
 	height: 77px;
@@ -333,6 +338,10 @@ table {
     border-collapse: collapse;
 }
 
+table#all {
+    width: 100%;
+}
+
 thead {
     background-color: #181818;
 }
@@ -359,6 +368,10 @@ tbody tr {
     height: 50px;
 }
 
+tbody .active {
+    background-color: gray !important;
+}
+
 tbody tr:nth-child(even) {
     background-color: #f5f5f5;
 }
@@ -369,6 +382,15 @@ tbody tr:nth-child(even) {
 
 .fa-arrow-down {
     color: red;
+}
+
+.fa-circle {
+    color: orange;
+}
+
+table#all tbody tr th:nth-child(2)::before {
+    content: "$ ";
+    color: #28903a;
 }
 
 tbody tr:last-child th:first-child {
@@ -402,7 +424,7 @@ label{
 .input-cont{
 	width: 720px;
     height: 87px;
-    background: #eeeeee;
+    background: #eeeeee !important;
     display: flex;
     flex-direction: column;
     padding: 30px;

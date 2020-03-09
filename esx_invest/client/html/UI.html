@@ -3,9 +3,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css" type="text/css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.12.0/css/all.css" crossorigin="anonymous">
     <style>
-        #buyUI, #allUI, #sellUI, #general, #topbar/*, #waiting */
+        #buyUI, #allUI, #sellUI, #general, #topbar, #waiting
         {display: none;}
    </style>
 </head>
@@ -77,53 +77,17 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr data-name="job-1">
                         <th>Job 1</th>
                         <th><i class="fas fa-arrow-up"></i> 1.2%</th>
                     </tr>
-                    <tr>
+                    <tr data-name="job-2">
                         <th>Job 2</th>
                         <th><i class="fas fa-arrow-down"></i> 1.2%</th>
                     </tr>
-                    <tr>
+                    <tr data-name="job-3">
                         <th>Job 2</th>
-                        <th>^ 1.2%</th>
-                    </tr>
-                    <tr>
-                        <th>Job 2</th>
-                        <th>^ 1.2%</th>
-                    </tr>
-                    <tr>
-                        <th>Job 2</th>
-                        <th>^ 1.2%</th>
-                    </tr>
-                    <tr>
-                        <th>Job 2</th>
-                        <th>^ 1.2%</th>
-                    </tr>
-                    <tr>
-                        <th>Job 2</th>
-                        <th>^ 1.2%</th>
-                    </tr>
-                    <tr>
-                        <th>Job 2</th>
-                        <th>^ 1.2%</th>
-                    </tr>
-                    <tr>
-                        <th>Job 2</th>
-                        <th>^ 1.2%</th>
-                    </tr>
-                    <tr>
-                        <th>Job 2</th>
-                        <th>^ 1.2%</th>
-                    </tr>
-                    <tr>
-                        <th>Job 2</th>
-                        <th>^ 1.2%</th>
-                    </tr>
-                    <tr>
-                        <th>Job 2</th>
-                        <th>^ 1.2%</th>
+                        <th><i class="fas fa-circle"></i> 1.2%</th>
                     </tr>
                 </tbody>
             </table>
@@ -139,57 +103,25 @@
                     <span>Your Deposit</span></p>
                 </button>
             </form>
-            <!-- <div class="flex">
-                <div class="btn btn-blue banniere">
-                    <p>Deposit your money<br>
-                    <span>We are the most secure bank of the city</span></p>
-                </div>
-                <button class="btn btn-grey back">
-                    <i class="fas fa-bars"></i>
-                    <span class="fas fa-arrow-left icon"></span>
-                    <p>Return<br>
-                    <span>To the main menu</span></p>
-                </button>
-            </div> -->
-            <!-- <form id="deposit1">
-                <div class="input-cont box-shadow">
-                    <label>How much do you want to diposit</label>
-                    <input id="amount" type="number" placeholder="$0">
-                </div>
-                <button class="btn btn-green" type="submit">
-                    <i class="fas fa-check"></i>
-                    <span class="fas fa-check icon"></span>
-                    <p>Validate<br>
-                    <span>Your Deposit</span></p>
-                </button>
-            </form> -->
         </div>
 <!-- ########### ALL MENU ###########  -->
-        <div class="cont-content" id="allUI">
-            <div class="flex">
-                <div class="btn btn-violet banniere">
-                    <p>Withdraw money<br>
-                    <span>from you bank account</span></p>
-                </div>
-                <button class="btn btn-grey back">
-                    <i class="fas fa-bars"></i>
-                    <span class="fas fa-arrow-left icon"></span>
-                    <p>Return<br>
-                    <span>to the main menu</span></p>
-                </button>
-            </div>
-            <form id="withdraw1">
-                <div class="input-cont box-shadow">
-                    <label>How much do you want to withdraw</label>
-                    <input id="amountw" type="number" placeholder="$0">
-                </div>
-                <button class="btn btn-green" type="submit">
-                    <i class="fas fa-check"></i>
-                    <span class="fas fa-check icon"></span>
-                    <p>Validate<br>
-                    <span>Your withdrawal</span></p>
-                </button>
-            </form>
+        <div class="cont-content jobs" id="allUI">
+            <table id="all">
+                <thead>
+                    <tr>
+                        <th>Job name</th>
+                        <th>Amount</th>
+                        <th>Sold</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- <tr>
+                        <th>Job 1</th>
+                        <th><i class="fas fa-arrow-up"></i> 1.2%</th>
+                        <th>-</th>
+                    </tr> -->
+                </tbody>
+            </table>
         </div>
 <!-- ########### SELL MENU ###########  -->
         <div class="cont-content" id="sellUI">

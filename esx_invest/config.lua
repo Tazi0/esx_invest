@@ -14,3 +14,5 @@ Config.InvestRateTime = 10 -- Minutes
 -- Good stock = more money geranteed or not
 Config.GoodStock = false 
 -- if *true* it will be from 1.00 to 2.00 *else* it can be 0.00 to 2.00 (so if it's true then they will 100% make money geranteed)
+
+Config.Debug = true
