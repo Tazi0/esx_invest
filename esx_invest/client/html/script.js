@@ -29,7 +29,7 @@ $(function() {
                 $('#jobs tbody').append(`
                     <tr data-name='${obj.name}'>
                         <th>${obj.label}</th>
-                        <th><i class='fas ${icon}'></i> ${obj.stock}</th>
+                        <th><i class='fas ${icon}'></i> ${obj.stock}%</th>
                     </tr>`)
             }
         } else if(event.data.type == "all") {
@@ -60,6 +60,8 @@ $(function() {
                 console.log(obj);
 
                 var intrest = obj.investRate - obj.rate
+
+                intrest = parseFloat(intrest).toFixed(2)
                 
                 if(intrest > 0) {
                     var icon = "fa-arrow-up"

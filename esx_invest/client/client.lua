@@ -70,6 +70,10 @@ RegisterNUICallback("sellInvestment", function(data, cb)
 	TriggerServerEvent("invest:sell", data.job, data.sellRate)
 end)
 
+RegisterNUICallback("buyInvestment", function(data, cb)
+	TriggerServerEvent("invest:buy", data.job, data.amount, data.boughtRate)
+end)
+
 -- Open UI
 function openUI()
 	inMenu = true

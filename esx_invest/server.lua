@@ -71,14 +71,28 @@ RegisterServerEvent("invest:buy")
 AddEventHandler("invest:buy", function(job, amount, rate)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
-    -- TODO see if already is investend, if not then insert else update
-    -- TODO delete bank money from invested
-    MySQL.Sync.execute("INSERT INTO `invest` (identifier, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
-        ["@id"] = xPlayer.getIdentifier(),
-        ["@job"] = job,
-        ["@amount"] = amount,
-        ["@rate"] = rate
-    })
+    local id = xPlayer.getIdentifier()
+
+    local inf = MySQL.Sync.fetchAll('SELECT * FROM `invest` WHERE `identifier`=@id AND active=1 AND job=@job LIMIT 1', {["@id"] = id, ['@job'] = job})
+    for k, v in pairs(inf) do inf = v end
+    
+    xPlayer.removeMoney(amount)
+
+    if(type(inf) == "table") then
+        print("[esx_invest] Adding money to an existing investment")
+        MySQL.Sync.execute("UPDATE `invest` SET amount=amount+@num WHERE `identifier`=@id AND active=1 AND job=@job", {["@id"] = xPlayer.getIdentifier(), ["@num"]=amount, ['@job'] = job})
+    else
+        print("[esx_invest] Creating a new investment")
+        print(job)
+        print(amount)
+        print(rate)
+        MySQL.Sync.execute("INSERT INTO `invest` (identifier, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
+            ["@id"] = xPlayer.getIdentifier(),
+            ["@job"] = job,
+            ["@amount"] = amount,
+            ["@rate"] = rate
+        })
+    end
 end)
 
 -- Sell an investment
@@ -95,12 +109,13 @@ AddEventHandler("invest:sell", function(job, sellRate)
     local amount = investment.amount
     local addMoney = amount + (sellRate * amount)
 
+    MySQL.Sync.execute("UPDATE `invest` SET active=0, sold=now(), soldAmount=@money WHERE `id`=@id", {["@id"] = investment.id, ["@money"] = addMoney})
+
     if(addMoney > 0) then
         xPlayer.addMoney(addMoney)
     else
         xPlayer.removeMoney(addMoney)
     end
-    MySQL.Sync.execute("UPDATE `invest` SET active=0,sold=now(),soldAmount=@money WHERE `identifier`=@id", {["@id"] = investment.identifier, ["@money"]=addMoney})
 end)
 
 -- Gives a random number
