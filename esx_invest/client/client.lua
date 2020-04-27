@@ -59,7 +59,15 @@ RegisterNUICallback("jobs", function()
 end)
 
 RegisterNUICallback("all", function()
-	TriggerServerEvent("invest:all")
+	TriggerServerEvent("invest:all", false)
+end)
+
+RegisterNUICallback("sell", function()
+	TriggerServerEvent("invest:all", true)
+end)
+
+RegisterNUICallback("sellInvestment", function(data, cb)
+	TriggerServerEvent("invest:sell", data.job, data.sellRate)
 end)
 
 -- Open UI

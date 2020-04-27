@@ -1,5 +1,7 @@
 var innermenu = false
+var jobs = null
 var activeSelected = null
+var activeMenu = null
 
 $(function() {
     window.addEventListener('message', function(event) {
@@ -49,6 +51,30 @@ $(function() {
                         <th>${sold}</th>
                     </tr>`)
             }
+        } else if(event.data.type == "sell") {
+            $("#sell tbody").empty();
+
+            var array = event.data.cache
+            for (var e in array) {
+                var obj = array[e];
+                console.log(obj);
+
+                var intrest = obj.investRate - obj.rate
+                
+                if(intrest > 0) {
+                    var icon = "fa-arrow-up"
+                } else if(intrest < 0) {
+                    var icon = "fa-arrow-down"
+                } else {
+                    var icon = "fa-circle"
+                }
+                $('#sell tbody').append(`
+                    <tr data-name='${obj.name}'>
+                        <th>${obj.label}</th>
+                        <th>${obj.amount}</th>
+                        <th><i class='fas ${icon}'></i> ${intrest}%</th>
+                    </tr>`)
+            }
         }
     });
 });
@@ -90,12 +116,22 @@ $('form .btn').click(function (e) {
     e.preventDefault();
     var div = e.currentTarget.parentElement.parentElement
     var form = e.currentTarget.parentElement
-    var inputValue = $(form).find("input[type='number']")[0].value
-    if(/^\d+$/.test(inputValue)) {
+    var inputValue = $(form).find("input[type='number']")[0] || null
+    if(!inputValue || /^\d+$/.test(inputValue.value)) {
+        if(inputValue != null) inputValue = inputValue.value
         var trActive = $(div).find('table > tbody > .active')[0]
         var name = $(trActive).data("name")
+        var rate = $(trActive).children().last().text()
+        rate = rate.slice(0, -1).substr(1)
         console.log(name);
         console.log(inputValue);
+        console.log(rate);
+
+        if (activeMenu == "sell") {
+            $.post('http://esx_invest/sellInvestment', JSON.stringify({job: name, sellRate: rate}))
+        } else if(activeMenu == "buy") {
+            $.post('http://esx_invest/buyInvestment', JSON.stringify({job: name, amount: inputValue, boughtRate: rate}))
+        }
     }
 })
 
@@ -118,6 +154,16 @@ $('table').click(function(e) {
         }
         $(target).addClass("active")
         activeSelected = target
+
+        if(activeMenu == "sell") {
+            var button = $('#sellUI').children().last().children().last()
+            console.log(button);
+            
+            if($(button).css("opacity") < 1) {
+                $(button).css("opacity", 1)
+                $(button).css("pointer-events", "all")
+            }
+        }
     }
     
 })
@@ -133,6 +179,7 @@ $('#buy').click(function() {
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
     $.post('http://esx_invest/jobs', JSON.stringify({}))
     innermenu = true
+    activeMenu = "buy"
 })
 
 $('#all').click(function() {
@@ -141,13 +188,16 @@ $('#all').click(function() {
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
     $.post('http://esx_invest/all', JSON.stringify({}))
     innermenu = true
+    activeMenu = "all"
 })
 
 $('#sell').click(function() {
     $('#general').hide();
     $('#sellUI').show();
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
+    $.post('http://esx_invest/sell', JSON.stringify({}))
     innermenu = true
+    activeMenu = "sell"
 })
 
 $('.back').click(function(){

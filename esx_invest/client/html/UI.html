@@ -93,14 +93,14 @@
             </table>
             <form>
                 <div class="input-cont">
-                    <label>How much do you want to deposit</label>
+                    <label>How much do you want to invest</label>
                     <input type="number" id="amount" placeholder="$0">
                 </div>
                 <button class="btn btn-green" type="submit">
                     <i class="fas fa-check"></i>
                     <span class="fas fa-check icon"></span>
                     <p>Validate<br>
-                    <span>Your Deposit</span></p>
+                    <span>Active your investment</span></p>
                 </button>
             </form>
         </div>
@@ -115,44 +115,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <!-- <tr>
+                    <tr>
                         <th>Job 1</th>
                         <th><i class="fas fa-arrow-up"></i> 1.2%</th>
                         <th>-</th>
-                    </tr> -->
+                    </tr>
                 </tbody>
             </table>
         </div>
 <!-- ########### SELL MENU ###########  -->
         <div class="cont-content" id="sellUI">
-            <div class="flex">
-                <div class="btn btn-orange banniere">
-                    <p>Make a transfer<br>
-                    <span>to a friend</span></p>
-                </div>
-                <button class="btn btn-grey back">
-                    <i class="fas fa-bars"></i>
-                    <span class="fas fa-arrow-left icon"></span>
-                    <p>Return<br>
-                    <span>To the main menu</span></p>
-                </button>
-            </div>
-            <form id="transfer1">
-                <div class="double-input">
-                    <div class="input-cont box-shadow">
-                        <label>How much do you want to give?</label>
-                        <input id="amountt" type="number" placeholder="$0">
-                    </div>
-                    <div class="input-cont box-shadow">
-                        <label>Who would you like to transfer to?</label>
-                        <input id="to" type="text" placeholder="ID">
-                    </div>
-                </div>
+            <table id="sell">
+                <thead>
+                    <tr>
+                        <th>Job name</th>
+                        <th>Invested</th>
+                        <th>Intrest</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-name="job-1">
+                        <th>Job 1</th>
+                        <th>100</th>
+                        <th><i class="fas fa-arrow-up"></i> 1.2%</th>
+                    </tr>
+                </tbody>
+            </table>
+            <form>
                 <button class="btn btn-green" type="submit">
                     <i class="fas fa-check"></i>
                     <span class="fas fa-check icon"></span>
-                    <p>Validate<br>
-                    <span>Your transfer</span></p>
+                    <p>Sell<br>
+                    <span>Your Deposit</span></p>
                 </button>
             </form>
         </div>

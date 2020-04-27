@@ -30,7 +30,8 @@ textarea:focus, input:focus{
 .container{
 	height: 600px;
 	width: 900px;
-    margin:auto;
+    margin: auto;
+    border-radius: 10px;
 }
 body{
 	display: flex;
@@ -48,13 +49,16 @@ body{
 	height: calc(100% - 179px);
 	width: calc(100% - 120px);
     padding: 60px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
 }
 .cont-waiting{
 	background: #eeeeee;
 	height: 100%;
 	width: 100%;
 	position: relative;
-	overflow: hidden;
+    overflow: hidden;
+    border-radius: 15px;
 }
 .flex{
 	display: flex;
@@ -62,16 +66,17 @@ body{
 /*######################################################*/
 /* ###############         BUTTON        ###############*/
 /*######################################################*/
-button{
+button {
 	cursor: pointer;
 	border: 0;
 }
 
 button[type="submit"] {
+    float: right;
     opacity: 0.6;
     pointer-events: none;
 }
-.btn{
+.btn {
 	width: 236px;
 	height: 77px;
 	font-family: "futura", sans-serif;
@@ -142,6 +147,8 @@ button[type="submit"] {
     flex-direction: column;
     position: relative;
     overflow: hidden;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
 }
 .parale-1{
 	width: 460px;
@@ -321,14 +328,6 @@ nav{
 /* #################     BUY MENU      ################ */
 /*######################################################*/
 
-.jobs form .input-cont {
-    width: 40%;
-}
-
-.jobs form .btn {
-    left: 75px;
-}
-
 table {
     width: 50%;
     float: left;
@@ -413,7 +412,8 @@ tbody tr:last-child th:last-child {
     justify-content: center;
 }
 form{
-	margin-top: 60px;
+    width: 350px;
+    float: right;
 }
 label{
 	margin-bottom: 10px;
@@ -422,7 +422,7 @@ label{
 	font-family: "futura", sans-serif;
 }
 .input-cont{
-	width: 720px;
+	width: 90%;
     height: 87px;
     background: #eeeeee !important;
     display: flex;
