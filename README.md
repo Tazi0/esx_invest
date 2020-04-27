@@ -24,13 +24,15 @@ Brings a new aspect to making money.
 
 ## TODO
  - [ ] MySQL
-	 - [ ] Table `invest` with:
+	 - [x] Table `invest`:
 		 - [x] Identifier (the id ESX gave to the user)
 		 - [x] Amount (how much did he/she invest?)
 		 - [x] Job (what is the job he/she invested in?)
-		 - [ ] Rate (what was the current investment rate?)
+		 - [x] Rate (what was the current investment rate?)
 		 - [x] Active (is the investment still active?)
 		 - [x] Created (when was the investment made?)
+	 - [x] Add to table `jobs`:
+	 	 - [x] investRate (what the current investment is on the job)
  - [ ] Back-end
 	 - [ ] server.lua
 		 - [x] use mysql-async to lay connection with database
@@ -40,25 +42,25 @@ Brings a new aspect to making money.
 		 - [ ] when stock is bought: 
 			 - [ ] check if user has amount on bank
 			 - [ ] added into the `invest` table with all the information
-			 - [ ] remove invested money from users bank
-		 - [ ] when stock is sold:
-			 - [ ] currentRate(1.5%) - boughtRate(0.7%) = diffrenceRate(+0,8%)
-			 - [ ] investment($200) + investment*(differenceRate) = newAmount($360)
-			 - [ ] add newAmount to the users bank
-			 - [ ] disable the investment
+			 - [x] remove invested money from users bank
+		 - [x] when stock is sold:
+			 - [x] currentRate(1.5%) - boughtRate(0.7%) = diffrenceRate(+0,8%)
+			 - [x] investment($200) + investment*(differenceRate) = newAmount($360)
+			 - [x] add newAmount to the users bank
+			 - [x] disable the investment
 	 - [x] client.lua
 		 - [x] NUI function so it can be send to the UI (job information or available jobs to invest in)
 		 - [x] notify when user is around blip that they can open the menu
 		 - [x] create blips from config file
 		 - [x] new_banking button callback
 		 - [x] UI bug fix (on resource stop `closeUI()`)
- - [ ] Front-end
-	 - [ ] Style
-		 - [ ] Modern
-		 - [ ] Sleek
-		 - [ ] (Soft UI)
-	- [ ] Job list with table from what you can buy
-	- [ ] lots more but cba to write it out
+ - [x] Front-end
+	 - [x] Style
+		 - [x] Modern
+		 - [x] Sleek
+		 - [x] (Soft UI)
+	- [x] Job list with table from what you can buy
+	- [x] lots more but cba to write it out
 
 ## Installation
 1. Download esx_invest
