@@ -42,7 +42,7 @@ $(function() {
                     var sold = "-"
                 } else {
                     var time = new Date(obj.created-obj.sold)
-                    var sold = "yas"
+                    var sold = "Yes"
                 }
                 $('#all tbody').append(`
                     <tr>
@@ -123,6 +123,7 @@ $('form .btn').click(function (e) {
         var name = $(trActive).data("name")
         var rate = $(trActive).children().last().text()
         rate = rate.slice(0, -1).substr(1)
+
         console.log(name);
         console.log(inputValue);
         console.log(rate);
@@ -132,6 +133,8 @@ $('form .btn').click(function (e) {
         } else if(activeMenu == "buy") {
             $.post('http://esx_invest/buyInvestment', JSON.stringify({job: name, amount: inputValue, boughtRate: rate}))
         }
+        $('#buyUI, #allUI, #sellUI').hide();
+        $('#general').show();
     }
 })
 

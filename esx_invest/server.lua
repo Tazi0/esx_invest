@@ -49,7 +49,7 @@ AddEventHandler("invest:all", function(special)
     local user = MySQL.Sync.fetchAll(sql, {["@id"] = xPlayer.getIdentifier()})
 
     for k, v in pairs(user) do
-        print(k, v.identifier, v.amount, v.job, v.active, v.created, v.investRate)
+        -- print(k, v.identifier, v.amount, v.job, v.active, v.created, v.investRate)
         user[k].label = Cache[v.job].label
     end
 
@@ -88,21 +88,19 @@ AddEventHandler("invest:sell", function(job, sellRate)
     local xPlayer = ESX.GetPlayerFromId(_source)
 
     local id = xPlayer.getIdentifier()
+
     local investment = MySQL.Sync.fetchAll('SELECT * FROM `invest` WHERE `identifier`=@id AND active=1 AND job=@job', {["@id"] = id, ['@job'] = job})
-    print(investment)
+    for k, v in pairs(investment) do investment = v end
+
     local amount = investment.amount
+    local addMoney = amount + (sellRate * amount)
 
-    local rate = rate * amount
-
-    print(rate)
-
-    -- TODO Add money to the bank
-    -- TODO Disable the investment
-
-
-    -- MySQL.Sync.execute("UPDATE `invest` SET active=0 WHERE id=@id", {
-    --     ["@id"] = id
-    -- })
+    if(addMoney > 0) then
+        xPlayer.addMoney(addMoney)
+    else
+        xPlayer.removeMoney(addMoney)
+    end
+    MySQL.Sync.execute("UPDATE `invest` SET active=0,sold=now(),soldAmount=@money WHERE `identifier`=@id", {["@id"] = investment.identifier, ["@money"]=addMoney})
 end)
 
 -- Gives a random number
