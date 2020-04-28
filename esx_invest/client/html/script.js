@@ -107,12 +107,19 @@ $('.input-cont input').on("input", function(e) {
     // console.log(e);
     var input = e.target.value
     var isnum = /^\d+$/.test(input)
-    if(isnum) {
+    
+    if(input == "") {
         var button = e.target.parentElement.parentElement.lastElementChild
-        if($(button).css("opacity") < 1) {
-            $(button).css("opacity", 1)
-            $(button).css("pointer-events", "all")
-        }
+
+        buttonHandle(button, false)
+
+    }
+    var parent = e.currentTarget.parentElement.parentElement.parentElement
+    var active = $(parent).find('table > tbody > .active')[0]
+
+    if(isnum && active) {
+        var button = e.target.parentElement.parentElement.lastElementChild
+        buttonHandle(button)
     }
 })
 
@@ -152,25 +159,33 @@ $('table').click(function(e) {
         return;
         // wtf happend where did he press?
     }
+
     var currentForm = $(target).closest('div').children("form")[0];
     var selectedName = $(target).data("label");
     if(selectedName != null) {
         $(currentForm).data("label", selectedName)
-        // console.log($(currentForm).data("name"));
+
         if(activeSelected != null) {
             $(activeSelected).removeClass("active")
         }
+
         $(target).addClass("active")
         activeSelected = target
 
         if(activeMenu == "sell") {
             var button = $('#sellUI').children().last().children().last()
-            
-            if($(button).css("opacity") < 1) {
-                $(button).css("opacity", 1)
-                $(button).css("pointer-events", "all")
+        } else if(activeMenu == "buy") {
+            var input = $('#buyUI').find('form > div > input')[0]
+            var value = input.value
+
+            if(value != "") {
+                var button = $('#buyUI').find('form > button')[0]
+            } else {
+                button = null
             }
         }
+
+        buttonHandle(button)
     }
     
 })
@@ -215,6 +230,18 @@ $('.back').click(function(){
 document.onkeyup = function(data){
     if (data.which == 27){
         close()
+    }
+}
+
+function buttonHandle(button, activate = true) {
+    if(typeof button != "object") return false;
+
+    if(activate) {
+        $(button).css("opacity", 1)
+        $(button).css("pointer-events", "all")
+    } else {
+        $(button).css("opacity", 0.6)
+        $(button).css("pointer-events", "none")
     }
 }
 
