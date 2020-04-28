@@ -11,16 +11,13 @@ Based off of [new_banking](https://forum.fivem.net/t/release-new-banking-reskin/
  - [es_extended (ESX)](https://forum.fivem.net/t/release-esx-base/39881)
  - (optional [new_banking](https://forum.fivem.net/t/release-new-banking-reskin/220487))
 
-Latest Server Build 
-  - [Windows](https://runtime.fivem.net/artifacts/fivem/build_server_windows/master/)
-  - [Linux](https://runtime.fivem.net/artifacts/fivem/build_proot_linux/master/)
-
 ## Why install this?
-It brings more jobs like Stockbroker..... <br>
-Brings a new aspect to making money.
+It brings more jobs like Stockbroker. <br>
+Brings a new aspect to making money. By investing money into a company and after a time make a profit or loss. <br>
+This will be one of the fastest ways to make money if you do it well. <br>
 
 ## TODO
- - [ ] MySQL
+ - [x] MySQL
 	 - [x] Table `invest`:
 		 - [x] Identifier (the id ESX gave to the user)
 		 - [x] Amount (how much did he/she invest?)
@@ -30,15 +27,15 @@ Brings a new aspect to making money.
 		 - [x] Created (when was the investment made?)
 	 - [x] Add to table `jobs`:
 	 	 - [x] investRate (what the current investment is on the job)
- - [ ] Back-end
-	 - [ ] server.lua
+ - [x] Back-end
+	 - [x] server.lua
 		 - [x] use mysql-async to lay connection with database
 		 - [x] get the current invested balance from the user
 		 - [x] get the current available jobs from the database
 		 - [x] a loop that gives the job a new investment rate and says if it got up or down
-		 - [ ] when stock is bought: 
-			 - [ ] check if user has amount on bank
-			 - [ ] added into the `invest` table with all the information
+		 - [x] when stock is bought: 
+			 - [x] check if user has amount on bank
+			 - [x] added into the `invest` table with all the information
 			 - [x] remove invested money from users bank
 		 - [x] when stock is sold:
 			 - [x] currentRate(1.5%) - boughtRate(0.7%) = diffrenceRate(+0,8%)
