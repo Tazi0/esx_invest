@@ -131,7 +131,10 @@ function genRand(min, max, decimalPlaces)
 end
 
 -- Loop invest rates
-AddEventHandler('onResourceStart', function()
+AddEventHandler('onResourceStart', function(resourceName)
+    if (GetCurrentResourceName() ~= resourceName) then
+        return
+    end
     function loopUpdate()
         Citizen.Wait(60000*Config.InvestRateTime)
         if Config.Debug then
@@ -151,7 +154,7 @@ AddEventHandler('onResourceStart', function()
             elseif newRate < 1 then
                 rate = "down"
             end
-            -- print(newRate)
+            
             MySQL.Sync.execute("UPDATE `companies` SET investRate=@invest, rate=@rate WHERE label=@label", {
                 ["@invest"] = newRate,
                 ["@label"] = v.label,
