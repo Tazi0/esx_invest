@@ -1,3 +1,5 @@
+inMenu = false
+
 -- Show notification
 Citizen.CreateThread(function()
     while true do
@@ -15,7 +17,7 @@ Citizen.CreateThread(function()
     
             if IsControlJustPressed(1, 322) then
                 closeUI()
-            end
+			end
         end
     end
 end)
@@ -25,7 +27,6 @@ RegisterNetEvent("invest:nui")
 AddEventHandler("invest:nui", function (data)
 	SendNUIMessage(data)
 end)
-
 
 -- Blips
 Citizen.CreateThread(function()

@@ -26,11 +26,11 @@ $(function() {
                 } else {
                     var icon = "fa-circle"
                 }
-                
+
                 $('#companies tbody').append(`
                     <tr data-label='${obj.label}'>
                         <th>${obj.name}</th>
-                        <th><i class='fas ${icon}'></i> ${obj.stock}%</th>
+                        <th><i class='fas ${icon}'></i> ${obj.stock}</th>
                     </tr>`)
             }
         } else if(event.data.type == "all") {
@@ -58,7 +58,7 @@ $(function() {
             var array = event.data.cache
             for (var e in array) {
                 var obj = array[e];
-
+                
                 var intrest = obj.investRate - obj.rate
                 intrest = parseFloat(intrest).toFixed(2)
                 
@@ -69,11 +69,12 @@ $(function() {
                 } else {
                     var icon = "fa-circle"
                 }
+
                 $('#sell tbody').append(`
                     <tr data-label='${obj.label}'>
                         <th>${obj.name}</th>
                         <th>${obj.amount}</th>
-                        <th><i class='fas ${icon}'></i> ${intrest}%</th>
+                        <th><i class='fas ${icon}'></i> ${intrest}</th>
                     </tr>`)
             }
         }
@@ -126,9 +127,8 @@ $('form .btn').click(function (e) {
         var trActive = $(div).find('table > tbody > .active')[0]
 
         var label = $(trActive).data("label")
-
         var rate = $(trActive).children().last().text()
-        rate = rate.slice(0, -1).substr(1)
+        rate = parseFloat(rate.slice(0, -1).substr(1))
 
         if (activeMenu == "sell") {
             $.post('http://esx_invest/sellInvestment', JSON.stringify({job: label, sellRate: rate}))

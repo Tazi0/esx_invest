@@ -125,7 +125,7 @@ button[type="submit"] {
 	color: #e5873b;
 }
 .btn-green i{
-	color: #7cb732;
+	color: #53d0ff;
 }
 .btn-grey i{
 	color: #a0a0a0;
@@ -248,13 +248,13 @@ nav{
 }
 .balance .name{
 	font-size: 25px;
-	color: #28903a;
+	color: #53d0ff;
 	margin-bottom: 5px;
     display: block;
 }
 .balance .money{
 	font-size: 60px;
-	color: #28903a;
+	color: #53d0ff;
 	font-family: "futura", sans-serif;
 }
 
@@ -387,9 +387,11 @@ tbody tr:nth-child(even) {
     color: orange;
 }
 
-table#all tbody tr th:nth-child(2)::before {
-    content: "$ ";
-    color: #28903a;
+table#all tbody tr th:nth-child(2)::after,
+table#companies tbody tr th:nth-child(2)::after,
+table#sell tbody tr th:nth-child(3)::after {
+    content: "%";
+    color: #53d0ff;
 }
 
 tbody tr:last-child th:first-child {
@@ -440,11 +442,11 @@ label{
     background-color: #eeeeee;
     border: 0;
     font-size: 50px;
-    color: #28903a;
+    color: #53d0ff;
     font-family: "futura",sans-serif;
 }
 .input-cont input::-webkit-input-placeholder {
-  color: #7cb732;
+  color: #53d0ff;
 }
 .double-input{
 	display: flex;
@@ -516,7 +518,7 @@ label{
 	transition-duration: 0.2s;
 }
 #fingerprint-content:hover{
-    border: 2px solid #7cb732;
+    border: 2px solid #53d0ff;
 }
 .fingerprint-default{
 	position: absolute;
