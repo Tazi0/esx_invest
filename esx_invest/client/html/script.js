@@ -1,4 +1,4 @@
-var innermenu = false
+var inMenu = false
 var jobs = null
 var activeSelected = null
 var activeMenu = null
@@ -39,9 +39,8 @@ $(function() {
                 var obj = array[e];
                 console.log(obj.created);
                 if(obj.active) {
-                    var sold = "-"
+                    var sold = "No"
                 } else {
-                    var time = new Date(obj.created-obj.sold)
                     var sold = "Yes"
                 }
                 $('#all tbody').append(`
@@ -57,10 +56,8 @@ $(function() {
             var array = event.data.cache
             for (var e in array) {
                 var obj = array[e];
-                console.log(obj);
 
                 var intrest = obj.investRate - obj.rate
-
                 intrest = parseFloat(intrest).toFixed(2)
                 
                 if(intrest > 0) {
@@ -92,15 +89,17 @@ $('#fingerprint-content').click(function(){
 })
 
 $('#close').click(function() {
-    if(!innermenu) close()
-    else {
+    if(!inMenu) {
+        close()
+    } else {
         $('#close').html("Close <i class='fas fa-sign-out-alt'></i>");
         $('#buyUI, #allUI, #sellUI').hide();
         $('#general').show();
-        innermenu = false
+        inMenu = false
     }
 })
 
+// Input activate submit button
 $('.input-cont input').on("input", function(e) {
     // console.log(e);
     var input = e.target.value
@@ -114,6 +113,7 @@ $('.input-cont input').on("input", function(e) {
     }
 })
 
+// Process investments
 $('form .btn').click(function (e) {
     e.preventDefault();
     var div = e.currentTarget.parentElement.parentElement
@@ -122,24 +122,25 @@ $('form .btn').click(function (e) {
     if(!inputValue || /^\d+$/.test(inputValue.value)) {
         if(inputValue != null) inputValue = inputValue.value
         var trActive = $(div).find('table > tbody > .active')[0]
+
         var name = $(trActive).data("name")
+
         var rate = $(trActive).children().last().text()
         rate = rate.slice(0, -1).substr(1)
-
-        console.log(name);
-        console.log(inputValue);
-        console.log(rate);
 
         if (activeMenu == "sell") {
             $.post('http://esx_invest/sellInvestment', JSON.stringify({job: name, sellRate: rate}))
         } else if(activeMenu == "buy") {
             $.post('http://esx_invest/buyInvestment', JSON.stringify({job: name, amount: inputValue, boughtRate: rate}))
         }
+
         $('#buyUI, #allUI, #sellUI').hide();
         $('#general').show();
+        $.post('http://esx_invest/balance', JSON.stringify({}))
     }
 })
 
+// On table click process activiation + submition
 $('table').click(function(e) {
     var target = $(e.target)
     
@@ -183,7 +184,7 @@ $('#buy').click(function() {
     $('#buyUI').show();
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
     $.post('http://esx_invest/jobs', JSON.stringify({}))
-    innermenu = true
+    inMenu = true
     activeMenu = "buy"
 })
 
@@ -192,7 +193,7 @@ $('#all').click(function() {
     $('#allUI').show();
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
     $.post('http://esx_invest/all', JSON.stringify({}))
-    innermenu = true
+    inMenu = true
     activeMenu = "all"
 })
 
@@ -201,7 +202,7 @@ $('#sell').click(function() {
     $('#sellUI').show();
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
     $.post('http://esx_invest/sell', JSON.stringify({}))
-    innermenu = true
+    inMenu = true
     activeMenu = "sell"
 })
 

@@ -78,16 +78,19 @@ AddEventHandler("invest:buy", function(job, amount, rate)
     
     xPlayer.removeMoney(amount)
 
-    if(type(inf) == "table") then
-        print("[esx_invest] Adding money to an existing investment")
+    if(type(inf) == "table" and inf.job ~= nil) then
+        if Config.Debug then
+            print("[esx_invest] Adding money to an existing investment")
+        end
+
         MySQL.Sync.execute("UPDATE `invest` SET amount=amount+@num WHERE `identifier`=@id AND active=1 AND job=@job", {["@id"] = xPlayer.getIdentifier(), ["@num"]=amount, ['@job'] = job})
     else
-        print("[esx_invest] Creating a new investment")
-        print(job)
-        print(amount)
-        print(rate)
+        if Config.Debug then
+            print("[esx_invest] Creating a new investment")
+        end
+        
         MySQL.Sync.execute("INSERT INTO `invest` (identifier, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
-            ["@id"] = xPlayer.getIdentifier(),
+            ["@id"] = id,
             ["@job"] = job,
             ["@amount"] = amount,
             ["@rate"] = rate

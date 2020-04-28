@@ -38,7 +38,7 @@ Citizen.CreateThread(function()
 		SetBlipColour (blip, 2)
 		SetBlipAsShortRange(blip, true)
 		BeginTextCommandSetBlipName("STRING")
-		AddTextComponentString(v.name)
+		AddTextComponentString("Stock Exchange")
 		EndTextCommandSetBlipName(blip)
 	  end
 	end
@@ -74,6 +74,10 @@ RegisterNUICallback("buyInvestment", function(data, cb)
 	TriggerServerEvent("invest:buy", data.job, data.amount, data.boughtRate)
 end)
 
+RegisterNUICallback("balance", function(data, cb)
+	TriggerServerEvent("invest:balance")
+end)
+
 -- Open UI
 function openUI()
 	inMenu = true
@@ -88,6 +92,7 @@ function closeUI()
     SendNUIMessage({type = "close"})
 end
 
+-- Close menu on close
 AddEventHandler('onResourceStop', function (resourceName)
 	if (GetCurrentResourceName() ~= resourceName) then
 	  return
@@ -97,16 +102,7 @@ AddEventHandler('onResourceStop', function (resourceName)
     end
 end)
 
-AddEventHandler('onResourceStart', function (resourceName)
-	if(GetCurrentResourceName() ~= resourceName) then
-		return
-	end
-	if inMenu then
-        closeUI()
-    end
-end)
-
--- Functions
+-- near a blip
 function near()
 	local player = GetPlayerPed(-1)
 	local playerloc = GetEntityCoords(player, 0)

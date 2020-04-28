@@ -5,7 +5,10 @@ Config.ShowBlips = true
 
 -- Blip data/exact point
 Config.WallStreet = {
-    {name="Stock Exchange", id=374, x=160.266, y=-1040.203, z=29.374}
+    {id=374, x=-692.28, y=-587.52, z=31.55},
+    {id=374, x=243.27, y=-1072.81, z=29.29},
+    {id=374, x=-840.45, y=-334.11, z=38.68},
+    {id=374, x=-59.98, y=-790.45, z=44.23}
 }
 
 -- Loop for new stock rates 
