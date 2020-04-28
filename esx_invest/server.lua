@@ -34,13 +34,9 @@ RegisterServerEvent("invest:all")
 AddEventHandler("invest:all", function(special)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
-    local sql = 'SELECT * FROM `invest` '
-
-    if(special) then
-        sql = sql .. "INNER JOIN `companies` ON `invest`.`job` = `companies`.`label` "
-    end
-
-    sql = sql .. "WHERE `invest`.`identifier`= @id"
+    local sql = 'SELECT `invest`.*, `companies`.`name`,`companies`.`investRate`,`companies`.`label` FROM `invest` '..
+                'INNER JOIN `companies` ON `invest`.`job` = `companies`.`label` '..
+                'WHERE `invest`.`identifier`=@id'
 
     if(special) then 
         sql = sql .. " AND `invest`.`active`=1"
@@ -48,10 +44,9 @@ AddEventHandler("invest:all", function(special)
 
     local user = MySQL.Sync.fetchAll(sql, {["@id"] = xPlayer.getIdentifier()})
 
-    for k, v in pairs(user) do
-        print(k, v.identifier, v.amount, v.job, v.active, v.created, v.investRate)
-        user[k].label = Cache[v.job].label
-    end
+    -- for k, v in pairs(user) do
+    --     print(k, v.identifier, v.amount, v.job, v.name, v.active, v.created, v.investRate)
+    -- end
 
     if(special) then
         TriggerClientEvent("invest:nui", _source, {
@@ -76,7 +71,7 @@ AddEventHandler("invest:buy", function(job, amount, rate)
     local inf = MySQL.Sync.fetchAll('SELECT * FROM `invest` WHERE `identifier`=@id AND active=1 AND job=@job LIMIT 1', {["@id"] = id, ['@job'] = job})
     for k, v in pairs(inf) do inf = v end
     
-    xPlayer.removeMoney(amount)
+    xPlayer.removeAccountMoney('bank', tonumber(amount))
 
     if(type(inf) == "table" and inf.job ~= nil) then
         if Config.Debug then
@@ -87,6 +82,10 @@ AddEventHandler("invest:buy", function(job, amount, rate)
     else
         if Config.Debug then
             print("[esx_invest] Creating a new investment")
+        end
+
+        if rate == nil then
+            rate = 0
         end
 
         MySQL.Sync.execute("INSERT INTO `invest` (identifier, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
@@ -115,9 +114,9 @@ AddEventHandler("invest:sell", function(job, sellRate)
     MySQL.Sync.execute("UPDATE `invest` SET active=0, sold=now(), soldAmount=@money, rate=@rate WHERE `id`=@id", {["@id"] = investment.id, ["@money"] = addMoney, ["@rate"] =  sellRate})
 
     if(addMoney > 0) then
-        xPlayer.addMoney(addMoney)
+        xPlayer.addAccountMoney('bank', addMoney)
     else
-        xPlayer.removeMoney(addMoney)
+        xPlayer.removeAccountMoney('bank', addMoney)
     end
 end)
 
@@ -144,14 +143,13 @@ AddEventHandler('onResourceStart', function()
             end
 
             local rate = "stale"
-            if newRate > v.investRate then
+            if newRate > 1 then
                 rate = "up"
-            elseif newRate < v.investRate then
+            elseif newRate < 1 then
                 rate = "down"
             end
             -- print(newRate)
-            -- print(v.name)
-            MySQL.Sync.execute("UPDATE companies SET investRate=@invest, rate=@rate WHERE label=@label", {
+            MySQL.Sync.execute("UPDATE `companies` SET investRate=@invest, rate=@rate WHERE label=@label", {
                 ["@invest"] = newRate,
                 ["@label"] = v.label,
                 ["@rate"] = rate
