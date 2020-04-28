@@ -54,8 +54,8 @@ RegisterNUICallback("newBanking", function()
 	exports.new_banking:openUI()
 end)
 
-RegisterNUICallback("jobs", function()
-	TriggerServerEvent("invest:jobs")
+RegisterNUICallback("list", function()
+	TriggerServerEvent("invest:list")
 end)
 
 RegisterNUICallback("all", function()

@@ -2,7 +2,7 @@ ESX = nil
 Cache = {}
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
 
--- Get balance of invested jobs
+-- Get balance of invested companies
 RegisterServerEvent("invest:balance")
 AddEventHandler("invest:balance", function()
     local _source = source
@@ -20,16 +20,16 @@ AddEventHandler("invest:balance", function()
     })
 end)
 
--- Get available jobs
-RegisterServerEvent("invest:jobs")
-AddEventHandler("invest:jobs", function()
+-- Get available companies
+RegisterServerEvent("invest:list")
+AddEventHandler("invest:list", function()
     TriggerClientEvent("invest:nui", source, {
-        type = "jobs",
+        type = "list",
         cache = Cache
     })
 end)
 
--- Get all invested jobs
+-- Get all invested companies
 RegisterServerEvent("invest:all")
 AddEventHandler("invest:all", function(special)
     local _source = source
@@ -37,7 +37,7 @@ AddEventHandler("invest:all", function(special)
     local sql = 'SELECT * FROM `invest` '
 
     if(special) then
-        sql = sql .. "INNER JOIN `jobs` ON `invest`.`job` = `jobs`.`name` "
+        sql = sql .. "INNER JOIN `companies` ON `invest`.`job` = `companies`.`label` "
     end
 
     sql = sql .. "WHERE `invest`.`identifier`= @id"
@@ -49,7 +49,7 @@ AddEventHandler("invest:all", function(special)
     local user = MySQL.Sync.fetchAll(sql, {["@id"] = xPlayer.getIdentifier()})
 
     for k, v in pairs(user) do
-        -- print(k, v.identifier, v.amount, v.job, v.active, v.created, v.investRate)
+        print(k, v.identifier, v.amount, v.job, v.active, v.created, v.investRate)
         user[k].label = Cache[v.job].label
     end
 
@@ -88,7 +88,7 @@ AddEventHandler("invest:buy", function(job, amount, rate)
         if Config.Debug then
             print("[esx_invest] Creating a new investment")
         end
-        
+
         MySQL.Sync.execute("INSERT INTO `invest` (identifier, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
             ["@id"] = id,
             ["@job"] = job,
@@ -112,7 +112,7 @@ AddEventHandler("invest:sell", function(job, sellRate)
     local amount = investment.amount
     local addMoney = amount + (sellRate * amount)
 
-    MySQL.Sync.execute("UPDATE `invest` SET active=0, sold=now(), soldAmount=@money WHERE `id`=@id", {["@id"] = investment.id, ["@money"] = addMoney})
+    MySQL.Sync.execute("UPDATE `invest` SET active=0, sold=now(), soldAmount=@money, rate=@rate WHERE `id`=@id", {["@id"] = investment.id, ["@money"] = addMoney, ["@rate"] =  sellRate})
 
     if(addMoney > 0) then
         xPlayer.addMoney(addMoney)
@@ -135,32 +135,45 @@ AddEventHandler('onResourceStart', function()
         if Config.Debug then
             print("[esx_invest] Creating new investments")
         end
-        local jobs = MySQL.Sync.fetchAll("SELECT name,label,investRate FROM `jobs`")
-        for k, v in pairs(jobs) do
+        local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
+        for k, v in pairs(companies) do
             if Config.GoodStock then
                 newRate = genRand(1, 2, 2)
             else
                 newRate = genRand(0, 2, 2)
             end
-            -- print(newRate)
-            -- print(v.name)
-            MySQL.Sync.execute("UPDATE jobs SET investRate=@rate WHERE name=@name", {
-                ["@rate"] = newRate,
-                ["@name"] = v.name
-            })
+
             local rate = "stale"
             if newRate > v.investRate then
                 rate = "up"
             elseif newRate < v.investRate then
                 rate = "down"
             end
-            Cache[v.name] = {stock = newRate, rate = rate, label = v.label, name = v.name}
+            -- print(newRate)
+            -- print(v.name)
+            MySQL.Sync.execute("UPDATE companies SET investRate=@invest, rate=@rate WHERE label=@label", {
+                ["@invest"] = newRate,
+                ["@label"] = v.label,
+                ["@rate"] = rate
+            })
+            Cache[v.label] = {stock = newRate, rate = rate, label = v.label, name = v.name}
         end
         loopUpdate()
     end
-    local jobs = MySQL.Sync.fetchAll("SELECT name,label,investRate FROM jobs")
-    for k, v in pairs(jobs) do
-        Cache[v.name] = {stock = v.investRate, rate = "stale", label = v.label, name = v.name}
+    local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
+    for k, v in pairs(companies) do
+        if(v.investRate == nil) then
+            if Config.GoodStock then
+                v.investRate = genRand(1, 2, 2)
+            else
+                v.investRate = genRand(0, 2, 2)
+            end
+            MySQL.Sync.execute("UPDATE companies SET investRate=@rate WHERE label=@label", {
+                ["@rate"] = v.investRate,
+                ["@label"] = v.label
+            })
+        end
+        Cache[v.label] = {stock = v.investRate, rate = v.rate, label = v.label, name = v.name}
     end
     loopUpdate()
 end)

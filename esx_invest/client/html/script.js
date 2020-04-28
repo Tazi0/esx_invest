@@ -1,5 +1,4 @@
 var inMenu = false
-var jobs = null
 var activeSelected = null
 var activeMenu = null
 
@@ -13,12 +12,13 @@ $(function() {
         } else if(event.data.type == "balance") {
             $('.name').html(event.data.player);
             $('.money').html(event.data.balance);
-        } else if(event.data.type == "jobs") {
-            $("#jobs tbody").empty();
-            // console.log(event.data.cache);
+        } else if(event.data.type == "list") {
+            $("#companies tbody").empty();
+
             var array = event.data.cache
             for (var e in array) {
                 var obj = array[e];
+
                 if(obj.rate == "up") {
                     var icon = "fa-arrow-up"
                 } else if(obj.rate == "down") {
@@ -26,9 +26,10 @@ $(function() {
                 } else {
                     var icon = "fa-circle"
                 }
-                $('#jobs tbody').append(`
-                    <tr data-name='${obj.name}'>
-                        <th>${obj.label}</th>
+                
+                $('#companies tbody').append(`
+                    <tr data-label='${obj.label}'>
+                        <th>${obj.name}</th>
                         <th><i class='fas ${icon}'></i> ${obj.stock}%</th>
                     </tr>`)
             }
@@ -37,16 +38,17 @@ $(function() {
             var array = event.data.cache
             for (var e in array) {
                 var obj = array[e];
-                console.log(obj.created);
+
                 if(obj.active) {
                     var sold = "No"
                 } else {
                     var sold = "Yes"
                 }
+
                 $('#all tbody').append(`
                     <tr>
-                        <th>${obj.label}</th>
-                        <th>${obj.amount}</th>
+                        <th>${obj.name}</th>
+                        <th>${obj.rate}</th>
                         <th>${sold}</th>
                     </tr>`)
             }
@@ -68,8 +70,8 @@ $(function() {
                     var icon = "fa-circle"
                 }
                 $('#sell tbody').append(`
-                    <tr data-name='${obj.name}'>
-                        <th>${obj.label}</th>
+                    <tr data-label='${obj.label}'>
+                        <th>${obj.name}</th>
                         <th>${obj.amount}</th>
                         <th><i class='fas ${icon}'></i> ${intrest}%</th>
                     </tr>`)
@@ -123,15 +125,15 @@ $('form .btn').click(function (e) {
         if(inputValue != null) inputValue = inputValue.value
         var trActive = $(div).find('table > tbody > .active')[0]
 
-        var name = $(trActive).data("name")
+        var label = $(trActive).data("label")
 
         var rate = $(trActive).children().last().text()
         rate = rate.slice(0, -1).substr(1)
 
         if (activeMenu == "sell") {
-            $.post('http://esx_invest/sellInvestment', JSON.stringify({job: name, sellRate: rate}))
+            $.post('http://esx_invest/sellInvestment', JSON.stringify({job: label, sellRate: rate}))
         } else if(activeMenu == "buy") {
-            $.post('http://esx_invest/buyInvestment', JSON.stringify({job: name, amount: inputValue, boughtRate: rate}))
+            $.post('http://esx_invest/buyInvestment', JSON.stringify({job: label, amount: inputValue, boughtRate: rate}))
         }
 
         $('#buyUI, #allUI, #sellUI').hide();
@@ -151,9 +153,9 @@ $('table').click(function(e) {
         // wtf happend where did he press?
     }
     var currentForm = $(target).closest('div').children("form")[0];
-    var selectedName = $(target).data("name");
+    var selectedName = $(target).data("label");
     if(selectedName != null) {
-        $(currentForm).data("name", selectedName)
+        $(currentForm).data("label", selectedName)
         // console.log($(currentForm).data("name"));
         if(activeSelected != null) {
             $(activeSelected).removeClass("active")
@@ -163,7 +165,6 @@ $('table').click(function(e) {
 
         if(activeMenu == "sell") {
             var button = $('#sellUI').children().last().children().last()
-            console.log(button);
             
             if($(button).css("opacity") < 1) {
                 $(button).css("opacity", 1)
@@ -183,7 +184,7 @@ $('#buy').click(function() {
     $('#general').hide();
     $('#buyUI').show();
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
-    $.post('http://esx_invest/jobs', JSON.stringify({}))
+    $.post('http://esx_invest/list', JSON.stringify({}))
     inMenu = true
     activeMenu = "buy"
 })
