@@ -45,6 +45,8 @@ body{
 	box-shadow: 0px 0px 40px 0px rgba(224,224,224,0.5);
 }
 .cont-content{
+    overflow-y: auto;
+    position: relative;
 	background: #eeeeee;
 	height: calc(100% - 179px);
 	width: calc(100% - 120px);
@@ -332,9 +334,8 @@ table {
     width: 50%;
     float: left;
     margin-right: 15px;
-    height: 100px;
-    table-layout: fixed;
     border-collapse: collapse;
+    max-height: 100%;
 }
 
 table#all {
@@ -342,6 +343,7 @@ table#all {
 }
 
 thead {
+    width: 50px;
     background-color: #181818;
 }
 
@@ -359,7 +361,7 @@ thead tr:first-child th:last-child {
 }
 
 tbody {
-    height: 100px;
+    width: 100%;
     background-color: white;
 }
 
