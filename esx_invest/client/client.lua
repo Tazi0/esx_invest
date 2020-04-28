@@ -68,7 +68,7 @@ RegisterNUICallback("sell", function()
 end)
 
 RegisterNUICallback("sellInvestment", function(data, cb)
-	TriggerServerEvent("invest:sell", data.job, data.sellRate)
+	TriggerServerEvent("invest:sell", data.job)
 end)
 
 RegisterNUICallback("buyInvestment", function(data, cb)

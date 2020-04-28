@@ -99,19 +99,22 @@ end)
 
 -- Sell an investment
 RegisterServerEvent("invest:sell")
-AddEventHandler("invest:sell", function(job, sellRate)
+AddEventHandler("invest:sell", function(job)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
 
     local id = xPlayer.getIdentifier()
 
-    local investment = MySQL.Sync.fetchAll('SELECT * FROM `invest` WHERE `identifier`=@id AND active=1 AND job=@job', {["@id"] = id, ['@job'] = job})
-    for k, v in pairs(investment) do investment = v end
+    local result = MySQL.Sync.fetchAll( 'SELECT `invest`.*, `companies`.`investRate` FROM `invest` '..
+                                            'INNER JOIN `companies` ON `invest`.`job` = `companies`.`label` '..
+                                            'WHERE `identifier`=@id AND active=1 AND job=@job', {["@id"] = id, ['@job'] = job})
+    for k, v in pairs(result) do result = v end
 
-    local amount = investment.amount
+    local amount = result.amount
+    local sellRate = result.investRate - result.rate
     local addMoney = amount + (sellRate * amount)
 
-    MySQL.Sync.execute("UPDATE `invest` SET active=0, sold=now(), soldAmount=@money, rate=@rate WHERE `id`=@id", {["@id"] = investment.id, ["@money"] = addMoney, ["@rate"] =  sellRate})
+    MySQL.Sync.execute("UPDATE `invest` SET active=0, sold=now(), soldAmount=@money, rate=@rate WHERE `id`=@id", {["@id"] = result.id, ["@money"] = addMoney, ["@rate"] =  sellRate})
 
     if(addMoney > 0) then
         xPlayer.addAccountMoney('bank', addMoney)

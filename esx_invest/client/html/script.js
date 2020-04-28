@@ -131,7 +131,7 @@ $('form .btn').click(function (e) {
         rate = parseFloat(rate.slice(0, -1).substr(1))
 
         if (activeMenu == "sell") {
-            $.post('http://esx_invest/sellInvestment', JSON.stringify({job: label, sellRate: rate}))
+            $.post('http://esx_invest/sellInvestment', JSON.stringify({job: label}))
         } else if(activeMenu == "buy") {
             $.post('http://esx_invest/buyInvestment', JSON.stringify({job: label, amount: inputValue, boughtRate: rate}))
         }
