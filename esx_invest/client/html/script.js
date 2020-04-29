@@ -95,10 +95,7 @@ $('#close').click(function() {
     if(!inMenu) {
         close()
     } else {
-        $('#close').html("Close <i class='fas fa-sign-out-alt'></i>");
-        $('#buyUI, #allUI, #sellUI').hide();
-        $('#general').show();
-        inMenu = false
+        mainPage()
     }
 })
 
@@ -135,7 +132,7 @@ $('form .btn').click(function (e) {
 
         var label = $(trActive).data("label")
         var rate = $(trActive).children().last().text()
-        rate = parseFloat(rate.slice(0, -1).substr(1))
+        rate = parseFloat(rate.substr(1))
 
         if (activeMenu == "sell") {
             $.post('http://esx_invest/sellInvestment', JSON.stringify({job: label}))
@@ -143,9 +140,7 @@ $('form .btn').click(function (e) {
             $.post('http://esx_invest/buyInvestment', JSON.stringify({job: label, amount: inputValue, boughtRate: rate}))
         }
 
-        $('#buyUI, #allUI, #sellUI').hide();
-        $('#general').show();
-        $.post('http://esx_invest/balance', JSON.stringify({}))
+        mainPage()
     }
 })
 
@@ -191,7 +186,7 @@ $('table').click(function(e) {
 })
 
 $('#new_bank').click(function() {
-    $.post('http://esx_invest/newBanking', JSON.stringify({}))
+    $.post('http://esx_invest/newBanking', "{}")
 })
 
 // GENERAL
@@ -199,7 +194,7 @@ $('#buy').click(function() {
     $('#general').hide();
     $('#buyUI').show();
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
-    $.post('http://esx_invest/list', JSON.stringify({}))
+    $.post('http://esx_invest/list', "{}")
     inMenu = true
     activeMenu = "buy"
 })
@@ -208,7 +203,7 @@ $('#all').click(function() {
     $('#general').hide();
     $('#allUI').show();
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
-    $.post('http://esx_invest/all', JSON.stringify({}))
+    $.post('http://esx_invest/all', "{}")
     inMenu = true
     activeMenu = "all"
 })
@@ -217,14 +212,13 @@ $('#sell').click(function() {
     $('#general').hide();
     $('#sellUI').show();
     $('#close').html("Back <i class='fas fa-sign-out-alt'></i>");
-    $.post('http://esx_invest/sell', JSON.stringify({}))
+    $.post('http://esx_invest/sell', "{}")
     inMenu = true
     activeMenu = "sell"
 })
 
 $('.back').click(function(){
-    $('#buyUI, #allUI, #sellUI').hide();
-    $('#general').show();
+    mainPage()
 })
 
 document.onkeyup = function(data){
@@ -245,8 +239,16 @@ function buttonHandle(button, activate = true) {
     }
 }
 
+function mainPage() {
+    $('#close').html("Close <i class='fas fa-sign-out-alt'></i>");
+    $('#buyUI, #allUI, #sellUI').hide();
+    $('#general').show();
+    inMenu = false
+    $.post('http://esx_invest/balance', "{}")
+}
+
 function close() {
     $('#general, #waiting, #sellUI, #allUI, #buyUI, #topbar').hide();
     $('body').removeClass("active");
-    $.post('http://esx_invest/close', JSON.stringify({}));
+    $.post('http://esx_invest/close', "{}");
 }
