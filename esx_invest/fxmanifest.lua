@@ -4,7 +4,7 @@ game 'gta5'
 author 'Tazio de Bruin'
 title 'ESX Invest'
 description 'Invest in companies'
-version '0.8.7'
+version '0.9'
 
 ui_page 'client/html/UI.html'
 

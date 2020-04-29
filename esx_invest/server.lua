@@ -66,12 +66,23 @@ RegisterServerEvent("invest:buy")
 AddEventHandler("invest:buy", function(job, amount, rate)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
+    local bank = xPlayer.getAccount('bank').money
     local id = xPlayer.getIdentifier()
+    amount = tonumber(amount)
 
     local inf = MySQL.Sync.fetchAll('SELECT * FROM `invest` WHERE `identifier`=@id AND active=1 AND job=@job LIMIT 1', {["@id"] = id, ['@job'] = job})
     for k, v in pairs(inf) do inf = v end
     
-    xPlayer.removeAccountMoney('bank', tonumber(amount))
+    if(amount == nil or amount <= 0) then
+        TriggerClientEvent('esx:showNotification', _source, _U('invalid_amount'))
+        return
+    else
+        if(bank < amount) then
+            TriggerClientEvent('esx:showNotification', _source, _U('broke_amount'))
+            return
+        end
+        xPlayer.removeAccountMoney('bank', tonumber(amount))
+    end
 
     if(type(inf) == "table" and inf.job ~= nil) then
         if Config.Debug then
@@ -135,11 +146,14 @@ AddEventHandler('onResourceStart', function(resourceName)
     if (GetCurrentResourceName() ~= resourceName) then
         return
     end
+
     function loopUpdate()
         Citizen.Wait(60000*Config.InvestRateTime)
+
         if Config.Debug then
             print("[esx_invest] Creating new investments")
         end
+
         local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
         for k, v in pairs(companies) do
             if Config.GoodStock then
@@ -164,6 +178,13 @@ AddEventHandler('onResourceStart', function(resourceName)
         end
         loopUpdate()
     end
+
+    Citizen.Wait(0) --Don't remove, crashes SQL
+
+    if Config.Debug then
+        print("[esx_invest] Powering Up")
+    end
+
     local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
     for k, v in pairs(companies) do
         if(v.investRate == nil) then
@@ -172,11 +193,13 @@ AddEventHandler('onResourceStart', function(resourceName)
             else
                 v.investRate = genRand(0, 2, 2)
             end
+
             MySQL.Sync.execute("UPDATE companies SET investRate=@rate WHERE label=@label", {
                 ["@rate"] = v.investRate,
                 ["@label"] = v.label
             })
         end
+
         Cache[v.label] = {stock = v.investRate, rate = v.rate, label = v.label, name = v.name}
     end
     loopUpdate()
