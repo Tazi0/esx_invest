@@ -3,6 +3,9 @@ Config = {}
 -- Show blips
 Config.ShowBlips = true
 
+-- Language
+Config.Locale = 'en'
+
 -- Blip data/exact point
 Config.WallStreet = {
     {id=374, x=-692.28, y=-587.52, z=31.55},

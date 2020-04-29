@@ -12,7 +12,6 @@ Citizen.CreateThread(function()
                 openUI()
 				local ped = GetPlayerPed(-1)
 				TriggerServerEvent("invest:balance")
-                -- TODO get invested balance
             end
     
             if IsControlJustPressed(1, 322) then
