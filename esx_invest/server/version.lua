@@ -3,10 +3,10 @@
 
 Citizen.CreateThread( function()
     updatePath = "Tazi0/esx_invest"
-    resourceName = "ESX Invest ("..GetCurrentResourceName()..")" -- the resource name
+    resourceName = "ESX Invest ("..GetCurrentResourceName()..")"
     
     function checkVersion(err,responseText, headers)
-        curVersion = LoadResourceFile(GetCurrentResourceName(), "version") -- make sure the "version" file actually exists in your resource root!
+        curVersion = GetResourceMetadata(GetCurrentResourceName(), "version", 0)
     
         if tonumber(curVersion) < tonumber(responseText) then
             print("\n------------------------------------")
@@ -15,5 +15,5 @@ Citizen.CreateThread( function()
         end
     end
     
-    PerformHttpRequest("https://raw.githubusercontent.com/"..updatePath.."/master/".. GetCurrentResourceName() .."/version", checkVersion, "GET")
+    PerformHttpRequest("https://raw.githubusercontent.com/"..updatePath.."/master/version", checkVersion, "GET")
 end)
