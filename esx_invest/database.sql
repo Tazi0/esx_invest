@@ -1,8 +1,5 @@
 USE `essentialmode`;
 
-------------------
--- Invest Table --
-------------------
 CREATE TABLE `invest` (
   `id` int(11) NOT NULL,
   `identifier` varchar(40) COLLATE utf8mb4_bin NOT NULL,
@@ -22,10 +19,6 @@ ALTER TABLE `invest`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;COMMIT;
 
 
-
----------------------
--- Companies Table --
----------------------
 CREATE TABLE `companies` (
   `name` varchar(50) COLLATE utf8mb4_bin NOT NULL,
   `label` varchar(50) COLLATE utf8mb4_bin NOT NULL,
