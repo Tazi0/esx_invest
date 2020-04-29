@@ -1,5 +1,3 @@
-
-**not finished**
 # esx_invest
 A FiveM plugin <br>
 Based off of [new_banking](https://forum.fivem.net/t/release-new-banking-reskin/220487) it is not a [dependency](#dependencies) but it is useful. (because it collaborates with it)
