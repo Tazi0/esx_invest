@@ -8,6 +8,7 @@ version '0.9'
 
 ui_page 'client/html/UI.html'
 
+export 'openUI'
 provide 'mysql-async'
 dependencies {
     'mysql-async',
@@ -25,7 +26,8 @@ server_scripts {
 	'locales/main.lua',
 	'locales/en.lua', 
     'config.lua',
-    'server.lua',
+    'server/server.lua',
+    'server/version.lua',
     '@mysql-async/lib/MySQL.lua'
 }
 

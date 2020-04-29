@@ -1,3 +1,9 @@
+--------------------------------------------------
+-- 				Don't edit anything here		--
+--					Made by Tazio				--
+--------------------------------------------------
+
+
 ESX = nil
 Cache = {}
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
@@ -7,6 +13,7 @@ RegisterServerEvent("invest:balance")
 AddEventHandler("invest:balance", function()
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
+
     local user = MySQL.Sync.fetchAll('SELECT `amount` FROM `invest` WHERE `identifier`=@id AND active=1', {["@id"] = xPlayer.getIdentifier()})
     local invested = 0
     for k, v in pairs(user) do
@@ -72,7 +79,35 @@ AddEventHandler("invest:buy", function(job, amount, rate)
 
     local inf = MySQL.Sync.fetchAll('SELECT * FROM `invest` WHERE `identifier`=@id AND active=1 AND job=@job LIMIT 1', {["@id"] = id, ['@job'] = job})
     for k, v in pairs(inf) do inf = v end
-    
+
+    if(type(inf) == "table" and inf.job ~= nil) then
+        if Config.Debug then
+            print("[esx_invest] Adding money to an existing investment")
+        end
+
+        MySQL.Sync.execute("UPDATE `invest` SET amount=amount+@num WHERE `identifier`=@id AND active=1 AND job=@job", {["@id"] = xPlayer.getIdentifier(), ["@num"]=amount, ['@job'] = job})
+        
+        TriggerClientEvent('esx:showNotification', _source, _U('added'))
+    else
+        if Config.Debug then
+            print("[esx_invest] User new investment")
+        end
+
+        if rate == nil then
+            TriggerClientEvent('esx:showNotification', _source, _U('unexpected_error'))
+            return
+        end
+
+        MySQL.Sync.execute("INSERT INTO `invest` (identifier, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
+            ["@id"] = id,
+            ["@job"] = job,
+            ["@amount"] = amount,
+            ["@rate"] = rate
+        })
+        
+        TriggerClientEvent('esx:showNotification', _source, _U('buy'))
+    end
+
     if(amount == nil or amount <= 0) then
         TriggerClientEvent('esx:showNotification', _source, _U('invalid_amount'))
         return
@@ -84,28 +119,7 @@ AddEventHandler("invest:buy", function(job, amount, rate)
         xPlayer.removeAccountMoney('bank', tonumber(amount))
     end
 
-    if(type(inf) == "table" and inf.job ~= nil) then
-        if Config.Debug then
-            print("[esx_invest] Adding money to an existing investment")
-        end
-
-        MySQL.Sync.execute("UPDATE `invest` SET amount=amount+@num WHERE `identifier`=@id AND active=1 AND job=@job", {["@id"] = xPlayer.getIdentifier(), ["@num"]=amount, ['@job'] = job})
-    else
-        if Config.Debug then
-            print("[esx_invest] Creating a new investment")
-        end
-
-        if rate == nil then
-            rate = 0
-        end
-
-        MySQL.Sync.execute("INSERT INTO `invest` (identifier, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
-            ["@id"] = id,
-            ["@job"] = job,
-            ["@amount"] = amount,
-            ["@rate"] = rate
-        })
-    end
+    TriggerEvent(_source, "invest:balance")
 end)
 
 -- Sell an investment
@@ -130,8 +144,12 @@ AddEventHandler("invest:sell", function(job)
     if(addMoney > 0) then
         xPlayer.addAccountMoney('bank', addMoney)
     else
+        addMoney = math.abs(addMoney)*-1
         xPlayer.removeAccountMoney('bank', addMoney)
     end
+    
+    TriggerClientEvent('esx:showNotification', _source, _U('sold'))
+    TriggerEvent(_source, "invest:balance")
 end)
 
 -- Gives a random number
@@ -156,11 +174,7 @@ AddEventHandler('onResourceStart', function(resourceName)
 
         local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
         for k, v in pairs(companies) do
-            if Config.GoodStock then
-                newRate = genRand(1, 2, 2)
-            else
-                newRate = genRand(0, 2, 2)
-            end
+            newRate = genRand(0, Config.StockLimit, 2)
 
             local rate = "stale"
             if newRate > 1 then
@@ -188,11 +202,7 @@ AddEventHandler('onResourceStart', function(resourceName)
     local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
     for k, v in pairs(companies) do
         if(v.investRate == nil) then
-            if Config.GoodStock then
-                v.investRate = genRand(1, 2, 2)
-            else
-                v.investRate = genRand(0, 2, 2)
-            end
+            v.investRate = genRand(0, Config.StockLimit, 2)
 
             MySQL.Sync.execute("UPDATE companies SET investRate=@rate WHERE label=@label", {
                 ["@rate"] = v.investRate,
