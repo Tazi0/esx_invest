@@ -4,22 +4,13 @@ game 'gta5'
 author 'Tazio de Bruin'
 title 'ESX Invest'
 description 'Invest in companies'
-version '0.9'
+version '1.0'
 
 ui_page 'client/html/UI.html'
 
-export 'openUI'
-provide 'mysql-async'
 dependencies {
     'mysql-async',
     'es_extended'
-}
-
-client_scripts {
-	'locales/main.lua',
-	'locales/en.lua', 
-    'config.lua',
-    'client/client.lua'
 }
 
 server_scripts {
@@ -30,6 +21,15 @@ server_scripts {
     'server/version.lua',
     '@mysql-async/lib/MySQL.lua'
 }
+
+client_scripts {
+	'locales/main.lua',
+	'locales/en.lua', 
+    'config.lua',
+    'client/client.lua'
+}
+
+export 'openUI'
 
 files {
     'client/html/UI.html',

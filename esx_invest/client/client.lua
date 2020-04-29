@@ -19,13 +19,26 @@ local keys = {
 
 -- User Interaction
 Citizen.CreateThread(function()
-	if Config.Debug then
-		print("[esx_invest] Creating thread")
+	while true do
+		Citizen.Wait(0)
+		if near() then
+			Notify(_U("open_menu"))
+			if IsControlJustPressed(1, keys[Config.Keys.Open]) then
+				openUI()
+				local ped = GetPlayerPed(-1)
+				TriggerServerEvent("invest:balance")
+			end
+	
+			if IsControlJustPressed(1, keys[Config.Keys.Close]) and inMenu then
+				closeUI()
+			end
+		end
 	end
+end)
 
-	-- Blip
+Citizen.CreateThread(function()
 	if Config.BlipActive then
-	  for k,v in ipairs(Config.BlipCoords) do
+		for k,v in ipairs(Config.BlipCoords) do
 		local blip = AddBlipForCoord(v.x, v.y, v.z)
 		SetBlipSprite(blip, Config.BlipID)
 		SetBlipDisplay(blip, 4)
@@ -35,25 +48,8 @@ Citizen.CreateThread(function()
 		BeginTextCommandSetBlipName("STRING")
 		AddTextComponentString(Config.BlipName)
 		EndTextCommandSetBlipName(blip)
-	  end
+		end
 	end
-
-	-- Open notification
-    while true do
-        Wait(0)
-        if near() then
-            Notify(_U("open_menu"))
-            if IsControlJustPressed(1, keys[Config.Keys.Open]) then
-                openUI()
-				local ped = GetPlayerPed(-1)
-				TriggerServerEvent("invest:balance")
-            end
-    
-            if IsControlJustPressed(1, keys[Config.Keys.Close]) and inMenu then
-                closeUI()
-			end
-        end
-    end
 end)
 
 -- Events

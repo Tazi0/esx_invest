@@ -27,4 +27,4 @@ Config.InvestRateTime = 10 -- Minutes
 Config.StockLimit = 5 -- %
 
 -- Debug mode
-Config.Debug = true
+Config.Debug = false
