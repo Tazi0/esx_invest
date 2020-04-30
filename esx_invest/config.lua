@@ -24,7 +24,11 @@ Config.Keys = {
 Config.InvestRateTime = 10 -- Minutes
 
 -- Stock settings
-Config.StockLimit = 5 -- %
+-- in %
+Config.Stock = {
+    Minimum = -5,
+    Maximum = 5
+}
 
 -- Debug mode
 Config.Debug = false
