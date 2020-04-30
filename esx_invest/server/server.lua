@@ -80,6 +80,17 @@ AddEventHandler("invest:buy", function(job, amount, rate)
     local inf = MySQL.Sync.fetchAll('SELECT * FROM `invest` WHERE `identifier`=@id AND active=1 AND job=@job LIMIT 1', {["@id"] = id, ['@job'] = job})
     for k, v in pairs(inf) do inf = v end
 
+    if(amount == nil or amount <= 0) then
+        TriggerClientEvent('esx:showNotification', _source, _U('invalid_amount'))
+        return
+    else
+        if(bank < amount) then
+            TriggerClientEvent('esx:showNotification', _source, _U('broke_amount'))
+            return
+        end
+        xPlayer.removeAccountMoney('bank', tonumber(amount))
+    end
+
     if(type(inf) == "table" and inf.job ~= nil) then
         if Config.Debug then
             print("[esx_invest] Adding money to an existing investment")
@@ -106,17 +117,6 @@ AddEventHandler("invest:buy", function(job, amount, rate)
         })
         
         TriggerClientEvent('esx:showNotification', _source, _U('buy'))
-    end
-
-    if(amount == nil or amount <= 0) then
-        TriggerClientEvent('esx:showNotification', _source, _U('invalid_amount'))
-        return
-    else
-        if(bank < amount) then
-            TriggerClientEvent('esx:showNotification', _source, _U('broke_amount'))
-            return
-        end
-        xPlayer.removeAccountMoney('bank', tonumber(amount))
     end
 
     TriggerEvent(_source, "invest:balance")
