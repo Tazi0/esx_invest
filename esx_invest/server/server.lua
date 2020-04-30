@@ -137,7 +137,7 @@ AddEventHandler("invest:sell", function(job)
 
     local amount = result.amount
     local sellRate = result.investRate - result.rate
-    local addMoney = amount + (sellRate * amount)
+    local addMoney = amount + ((amount * sellRate) / 100)
 
     
     -- print("intrest calc: " .. result.investRate .. " -> " .. result.rate .. " = " .. sellRate)
