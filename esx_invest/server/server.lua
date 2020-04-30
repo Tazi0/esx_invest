@@ -139,6 +139,10 @@ AddEventHandler("invest:sell", function(job)
     local sellRate = result.investRate - result.rate
     local addMoney = amount + (sellRate * amount)
 
+    
+    -- print("intrest calc: " .. result.investRate .. " -> " .. result.rate .. " = " .. sellRate)
+    -- print("money calc: " .. amount .. " -> " .. addMoney)
+
     MySQL.Sync.execute("UPDATE `invest` SET active=0, sold=now(), soldAmount=@money, rate=@rate WHERE `id`=@id", {["@id"] = result.id, ["@money"] = addMoney, ["@rate"] =  sellRate})
 
     if(addMoney > 0) then
