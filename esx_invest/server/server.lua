@@ -181,9 +181,9 @@ AddEventHandler('onResourceStart', function(resourceName)
             newRate = genRand(Config.Stock.Minimum, Config.Stock.Maximum, 2)
 
             local rate = "stale"
-            if newRate > 1 then
+            if newRate > v.investRate then
                 rate = "up"
-            elseif newRate < 1 then
+            elseif newRate < v.investRate then
                 rate = "down"
             end
             
