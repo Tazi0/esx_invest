@@ -136,8 +136,8 @@ AddEventHandler("invest:sell", function(job)
     for k, v in pairs(result) do result = v end
 
     local amount = result.amount
-    local sellRate = result.investRate - result.rate
-    local addMoney = amount + (sellRate * amount)
+    local sellRate = math.abs(result.investRate - result.rate)
+    local addMoney = amount + ((amount * sellRate) / 100)
 
     
     -- print("intrest calc: " .. result.investRate .. " -> " .. result.rate .. " = " .. sellRate)
@@ -178,7 +178,7 @@ AddEventHandler('onResourceStart', function(resourceName)
 
         local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
         for k, v in pairs(companies) do
-            newRate = genRand(0, Config.StockLimit, 2)
+            newRate = genRand(Config.Stock.Minimum, Config.Stock.Maximum, 2)
 
             local rate = "stale"
             if newRate > 1 then
@@ -206,7 +206,7 @@ AddEventHandler('onResourceStart', function(resourceName)
     local companies = MySQL.Sync.fetchAll("SELECT * FROM `companies`")
     for k, v in pairs(companies) do
         if(v.investRate == nil) then
-            v.investRate = genRand(0, Config.StockLimit, 2)
+            v.investRate = genRand(Config.Stock.Minimum, Config.Stock.Maximum, 2)
 
             MySQL.Sync.execute("UPDATE companies SET investRate=@rate WHERE label=@label", {
                 ["@rate"] = v.investRate,
@@ -219,5 +219,10 @@ AddEventHandler('onResourceStart', function(resourceName)
     loopUpdate()
 end)
 
+-- v1.2 >
 -- print(genRand(0, 2, 2)) -- from 0.00 to 2.00
 -- print(genRand(1, 2, 2)) -- from 1.00 to 2.00
+
+-- v1.2 <
+-- print(genRand(-5, 5, 2)) -- from -5% to 5%
+-- print(math.abs(-1 - -2.95)) -- difference between -1% and -2.95%
