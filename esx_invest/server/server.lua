@@ -81,12 +81,12 @@ AddEventHandler("invest:buy", function(job, amount, rate)
     for k, v in pairs(inf) do inf = v end
 
     if(amount == nil or amount <= 0) then
-        TriggerClientEvent('esx:showNotification', _source, _U('invalid_amount'))
-        return
+        return TriggerClientEvent('esx:showNotification', _source, _U('invalid_amount'))
+    elseif(Config.Stock.Limit ~= 0 and amount > Config.Stock.Limit) then
+        return TriggerClientEvent('esx:showNotification', _source, string.gsub(_U('to_much'), "{limit}", format_int(Config.Stock.Limit)))
     else
         if(bank < amount) then
-            TriggerClientEvent('esx:showNotification', _source, _U('broke_amount'))
-            return
+            return TriggerClientEvent('esx:showNotification', _source, _U('broke_amount'))
         end
         xPlayer.removeAccountMoney('bank', tonumber(amount))
     end
@@ -105,8 +105,7 @@ AddEventHandler("invest:buy", function(job, amount, rate)
         end
 
         if rate == nil then
-            TriggerClientEvent('esx:showNotification', _source, _U('unexpected_error'))
-            return
+            return TriggerClientEvent('esx:showNotification', _source, _U('unexpected_error'))
         end
 
         MySQL.Sync.execute("INSERT INTO `invest` (identifier, job, amount, rate) VALUES (@id, @job, @amount, @rate)", {
@@ -170,7 +169,7 @@ AddEventHandler('onResourceStart', function(resourceName)
     end
 
     function loopUpdate()
-        Citizen.Wait(60000*Config.InvestRateTime)
+        Citizen.Wait(60000*Config.Stock.Time)
 
         if Config.Debug then
             print("[esx_invest] Creating new investments")
@@ -218,6 +217,12 @@ AddEventHandler('onResourceStart', function(resourceName)
     end
     loopUpdate()
 end)
+
+function format_int(number)
+    local i, j, minus, int, fraction = tostring(number):find('([-]?)(%d+)([.]?%d*)')
+    int = int:reverse():gsub("(%d%d%d)", "%1,")
+    return minus .. int:reverse():gsub("^,", "") .. fraction
+end
 
 -- v1.2 >
 -- print(genRand(0, 2, 2)) -- from 0.00 to 2.00
