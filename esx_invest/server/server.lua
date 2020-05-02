@@ -185,6 +185,14 @@ AddEventHandler('onResourceStart', function(resourceName)
             elseif newRate < v.investRate then
                 rate = "down"
             end
+
+            if(Config.Stock.Lost ~= 0 and newRate < 0) then
+                MySQL.Sync.execute("UPDATE `invest` SET amount=(amount/100*(100-@lost)) WHERE active=1 AND job=@label", {
+                    ["@label"] = v.label,
+                    ["@lost"] = Config.Stock.Lost
+                })
+            end
+
             
             MySQL.Sync.execute("UPDATE `companies` SET investRate=@invest, rate=@rate WHERE label=@label", {
                 ["@invest"] = newRate,
