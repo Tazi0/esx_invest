@@ -1,7 +1,7 @@
 fx_version 'bodacious'
 game 'gta5'
 
-author 'Tazio de Bruin'
+author 'Tazio de Bruin - TR Version : Abdulkadir'
 title 'ESX Invest'
 description 'Invest in companies'
 version '1.3'
@@ -16,17 +16,19 @@ dependencies {
 server_scripts {
 	'locales/main.lua',
 	'locales/en.lua', 
-    'config.lua',
-    'server/server.lua',
-    'server/version.lua',
-    '@mysql-async/lib/MySQL.lua'
+	'locales/tr.lua', 
+    	'config.lua',
+    	'server/server.lua',
+    	'server/version.lua',
+    	'@mysql-async/lib/MySQL.lua'
 }
 
 client_scripts {
 	'locales/main.lua',
 	'locales/en.lua', 
-    'config.lua',
-    'client/client.lua'
+	'locales/tr.lua', 
+    	'config.lua',
+    	'client/client.lua'
 }
 
 export 'openUI'

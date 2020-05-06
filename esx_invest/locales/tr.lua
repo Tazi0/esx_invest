@@ -5,5 +5,6 @@ Locales['tr'] = {
     ['buy'] = "~g~Hisse senetini satın aldınız.",
     ['added'] = "Senetinize daha fazla yatırım yaptınız",
     ['unexpected_error'] = "~r~Beklenmeyen bir hata oluştu",
-    ['open_menu'] = "~INPUT_PICKUP~ Menüyü Aç"
+    ['open_menu'] = "~INPUT_PICKUP~ Menüyü Aç",
+    ['to_much'] = "~r~Girdiğiniz tutar çok fazla. En yükdek {limit} tutarını girebilirsiniz."
 }
