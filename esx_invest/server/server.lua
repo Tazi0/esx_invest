@@ -18,7 +18,7 @@ AddEventHandler("invest:balance", function()
     local invested = 0
     for k, v in pairs(user) do
         -- print(k, v.identifier, v.amount, v.job)
-        invested = invested + v.amount
+        invested = math.floor(invested + v.amount)
     end
     TriggerClientEvent("invest:nui", _source, {
         type = "balance",
