@@ -16,6 +16,7 @@ dependencies {
 server_scripts {
 	'locales/main.lua',
 	'locales/en.lua', 
+	'locales/es.lua',
 	'locales/tr.lua', 
     	'config.lua',
     	'server/server.lua',
@@ -26,6 +27,7 @@ server_scripts {
 client_scripts {
 	'locales/main.lua',
 	'locales/en.lua', 
+	'locales/es.lua',
 	'locales/tr.lua', 
     	'config.lua',
     	'client/client.lua'
